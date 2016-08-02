@@ -1,0 +1,48 @@
+= simple_form_for(@order) do |f|
+  = f.error_notification
+
+  .form-inputs
+    .panel.panel-info
+      .panel-heading
+        %h3.panel-title= t('app.forms.deceased')
+      .panel-body
+        = f.simple_fields_for :deceased do |p|
+          = p.input :name
+          = p.input :birthday, start_year: Date.today.year - 125, end_year: Date.today.year, order: [:day, :month, :year]
+          = p.input :deathday, start_year: Date.today.year - 10, end_year: Date.today.year, order: [:day, :month, :year]
+          = p.input :funeral_day, as: :date, start_year: Date.today.year - 10, end_year: Date.today.year + 1, order: [:day, :month, :year]
+          = p.input :funeral_place do
+            = p.input_field :funeral_place, list: 'funeral_place'
+            %datalist#funeral_place
+              - for fp in Deceased.full.uniq.pluck(:funeral_place) do
+                %option{value: fp}
+          = p.input :funeral_time, as: :time, :minute_step => 15, :start_hour => 6
+          = p.input :coffin_kind
+          = p.input :coffin_prepare_by
+          = p.input :coffin_issued_by
+          = p.input :note
+          -#TODO scope
+          .form-group
+            = p.label :cemetery_name
+            = p.input_field :cemetery_name, list: 'cemetery_name'
+            %datalist#cemetery_name
+              - for n in Deceased.full.uniq.pluck(:cemetery_name) do
+                %option{value: "#{n}"}
+          = p.input :crematorium_kind, collection: Deceased.crematorium_kinds, input_html: {}, prompt: 'Select crematorium kind'
+          = p.input :photo
+    .panel.panel-info
+      .panel-heading
+        %h3.panel-title= t('app.forms.relative')
+      .panel-body
+        = f.simple_fields_for :relative do |p|
+          = p.input :name
+          .form-group
+            = p.label :relationship
+            = p.input_field :relationship, list: 'relationship'
+            %datalist#relationship
+              - for n in Relative.full.uniq.pluck(:relationship) do
+                %option{value: "#{n}"}
+          = p.input :phone, as: :tel, pattern: '^(?:0|\(?\+33\)?\s?|0033\s?)[1-79](?:[\.\-\s]?\d\d){4}$'
+          = p.input :mobile, as: :tel, pattern: '^(?:0|\(?\+33\)?\s?|0033\s?)[1-79](?:[\.\-\s]?\d\d){4}$'
+  .form-actions
+    = f.button :submit

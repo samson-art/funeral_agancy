@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  receiptdate: 2016-07-28
+  status: 1
+  deceased: 
+  relative: 
+
+two:
+  receiptdate: 2016-07-28
+  status: 1
+  deceased: 
+  relative: 

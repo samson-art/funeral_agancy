@@ -1,0 +1,105 @@
+# Files in the config/locales directory are used for internationalization
+# and are automatically loaded by Rails. If you want to use locales other
+# than English, add the necessary files in this directory.
+#
+# To use the locales, use `I18n.t`:
+#
+#     I18n.t 'hello'
+#
+# In views, this is aliased to just `t`:
+#
+#     <%= t('hello') %>
+#
+# To use a different locale, set it with `I18n.locale`:
+#
+#     I18n.locale = :es
+#
+# This would use the information in config/locales/es.yml.
+#
+# To learn more, please read the Rails Internationalization guide
+# available at http://guides.rubyonrails.org/i18n.html.
+
+ru:
+  date:
+    formats:
+      default: "%d/%m/%Y"
+    time:
+      formats:
+        default: "%H:%M"
+  breadcrumbs:
+      homepage: Домой
+      first: First
+      second: Second
+      third: Third
+      orders:
+        homepage: "Список заказов"
+        new: "Новый заказ"
+        show: "Заказ №"
+        edit: "Редактирование заказа №"
+  app:
+    name: Похороны
+    buttons:
+      show: Показать
+      edit: "Изменить"
+      destroy: "Удалить"
+      search: "Поиск"
+      add: "Добавить новый"
+      back: "Назад"
+      docs: "Документы"
+      download: "Скачать"
+    new: "Новый"
+    topbar:
+      orders: Заказы
+      add: Добавить
+      search: Поиск
+      docs: "Документы"
+      actions: "Меню"
+      addorder: "Создать новый заказ"
+      contacts: "Контакты"
+      profile: "Профиль"
+      logout: "Выйти"
+    forms:
+      deceased: Информация о покойном
+      relative: Информация о родственнике
+      docs: "Документы"
+      overview: "Обзор"
+    order:
+      title: "Заказ"
+  helpers:
+      sure: Вы уверены?
+      submit:
+        create: Сохранить
+        submit: Сохранить
+        update: Сохранить
+  activerecord:
+    models:
+      deceased: Покойник
+      relative: Родственник
+      order: Заказ
+    attributes:
+      order:
+        id: ID
+        receiptdate: Дата заказа
+        status: Стутус
+      deceased:
+        id: ID
+        name: Имя
+        birthday: Дата рождения
+        deathday: Дата смерти
+        place: Место похорон
+        funeraldate: Дата похорон
+        cemeteryname: Название кладбища
+        photo: Фото
+      relative:
+        id: ID
+        name: Имя
+        relationship: Вид родства
+        phone: Телефон
+        mobile: Мобильный
+  views:
+    pagination:
+      first: ⇤
+      last: ⇥
+      previous: ←
+      next: →
+      truncate: …

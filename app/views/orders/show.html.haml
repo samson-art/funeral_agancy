@@ -1,0 +1,118 @@
+.page-header
+  %h1
+    = t('app.order.title')
+    %small= '#' + @order.id.to_s
+
+%ol.breadcrumb
+  =render_breadcrumbs :tag => :li, :separator => ''
+
+.container
+  .row
+    .col-md-7
+      #accordion.panel-group{ aria: { :multiselectable => 'true' }, :role => 'tablist'}
+        .panel.panel-info.overview
+          #headingFour.panel-heading{:role => 'tab'}
+            %a{aria: {:controls => 'collapseOverview', :expanded => 'true'}, data: { :toggle => 'collapse'}, :href => '#collapseOverview', :role => 'button'}
+              = t('app.forms.overview')
+              %i.glyphicon.glyphicon-chevron-down
+          #collapseOverview.panel-collapse.collapse.in{ aria: { :labelledby => 'headingFour'}, :role => 'tabpanel'}
+            .panel-body
+              .row
+                .col-md-6
+                  %dl.dl-horizontal
+                    %dt= Deceased.human_attribute_name(:name)
+                    %dd= @order.deceased.name
+                    %dt= Deceased.human_attribute_name(:funeral_day)
+                    %dd= @order.deceased.funeral_day
+                    %dt= Deceased.human_attribute_name(:funeral_time)
+                    %dd= @order.deceased.funeral_time
+                    %dt= Deceased.human_attribute_name(:cemetery)
+                    %dd= @order.deceased.cemetery_name
+
+                    %dt= Deceased.human_attribute_name(:note)
+                    %dd= @order.deceased.note
+                .col-md-6
+                  =image_tag @order.deceased.photo.url(:thumb), class: 'img-responsive'
+            .panel-footer.text-center
+              .btn-group{aria: {:label => '...'}, :role => 'group'}
+                =link_to docs_generate_order_path(@order), class: 'btn btn-primary', method: :post do
+                  %i.glyphicon.glyphicon-refresh
+                  = 'Update documents'
+                = link_to edit_order_path(@order), class: 'btn btn-info' do
+                  %i.glyphicon.glyphicon-edit
+                  = t('app.buttons.edit')
+                = link_to @order, :method => :delete, :data => { :confirm => 'Are you sure?' }, class: 'btn btn-danger btn' do
+                  %i.glyphicon.glyphicon-trash
+                  = t('app.buttons.destroy')
+        .panel.panel-info
+          #headingOne.panel-heading{:role => 'tab'}
+            %a{aria: {:controls => 'collapseDeceasedInfo', :expanded => 'true'}, data: { :toggle => 'collapse'}, :href => '#collapseDeceasedInfo', :role => 'button'}
+              = t('app.forms.deceased')
+              %i.glyphicon.glyphicon-chevron-down
+          #collapseDeceasedInfo.panel-collapse.collapse.in{ aria: { :labelledby => 'headingOne'}, :role => 'tabpanel'}
+            .panel-body
+              %dl.dl-horizontal
+                %dt= Deceased.human_attribute_name(:name)
+                %dd= @order.deceased.name
+                %dt= Deceased.human_attribute_name(:birthday)
+                %dd= @order.deceased.birthday
+                %dt= Deceased.human_attribute_name(:deathday)
+                %dd= @order.deceased.deathday
+                %dt= Deceased.human_attribute_name(:funeral_place)
+                %dd= @order.deceased.funeral_place
+                %dt= Deceased.human_attribute_name(:funeral_day)
+                %dd= @order.deceased.funeral_day
+                %dt= Deceased.human_attribute_name(:funeral_time)
+                %dd= @order.deceased.funeral_time
+                %dt= Deceased.human_attribute_name(:cemetery)
+                %dd= @order.deceased.cemetery_name
+                %dt= Deceased.human_attribute_name(:cramatorium_kind)
+                %dd= @order.deceased.crematorium_kind
+                %dt= Deceased.human_attribute_name(:coffin_prepare_by)
+                %dd= @order.deceased.coffin_prepare_by
+                %dt= Deceased.human_attribute_name(:coffin_issued_by)
+                %dd= @order.deceased.coffin_issued_by
+        .panel.panel-info
+          #headingTwo.panel-heading{:role => 'tab'}
+            %a{aria: {:controls => 'collapseRelativeInfo', :expanded => 'true'}, data: { :toggle => 'collapse'}, :href => '#collapseRelativeInfo', :role => 'button'}
+              = t('app.forms.relative')
+              %i.glyphicon.glyphicon-chevron-down
+          #collapseRelativeInfo.panel-collapse.collapse.in{ aria: { :labelledby => 'headingTwo'}, :role => 'tabpanel'}
+            .panel-body
+              %dl.dl-horizontal
+                %dt= Relative.human_attribute_name(:name)
+                %dd= @order.relative.name
+                %dt= Relative.human_attribute_name(:relationship)
+                %dd= @order.relative.relationship
+                %dt= Relative.human_attribute_name(:phone)
+                %dd= @order.relative.phone
+                %dt= Relative.human_attribute_name(:mobile)
+                %dd= @order.relative.mobile
+    .col-md-5
+      .panel.panel-info
+        #headingThree.panel-heading{:role => 'tab'}
+          %a{aria: {:controls => 'collapseDocs', :expanded => 'true'}, data: { :toggle => 'collapse'}, :href => '#collapseDocs', :role => 'button'}
+            = t('app.forms.docs')
+            %i.glyphicon.glyphicon-chevron-down
+        #collapseDocs.panel-collapse.collapse.in{ aria: { :labelledby => 'headingThree'}, :role => 'tabpanel'}
+          .panel-body
+            .table-responsive
+              %table.table.table-striped
+                %thead
+                  %tr
+                    %th #
+                    %th Name
+                    %th
+                    %th
+                %tbody
+                  - Order.docs_kinds.keys.each_with_index do |d, i|
+                    %tr
+                      %td= i+1
+                      %td
+                        = "#{@order.deceased.name.upcase}_#{d}"
+                      -#%td
+                      -#  = link_to d.attach.url, class: 'btn btn-primary btn-sm', target: '_blank' do
+                      -#    %i.glyphicon.glyphicon-download
+                      %td
+                        = link_to pdf_order_path(@order, d), class: 'btn btn-primary btn-sm', target: '_blank' do
+                          %i.glyphicon.glyphicon-eye-open

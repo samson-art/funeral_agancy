@@ -1,0 +1,187 @@
+!!!
+%html
+  %head
+    %meta{:content => "text/html; charset=UTF-8", "http-equiv" => "Content-Type"}
+    :css
+      <!--
+       /* Font Definitions */
+      @font-face
+      	{font-family:"Cambria Math";
+      	panose-1:0 0 0 0 0 0 0 0 0 0;}
+      @font-face
+      	{font-family:Calibri;
+      	panose-1:2 15 5 2 2 2 4 3 2 4;}
+      @font-face
+      	{font-family:"Arial Unicode MS";
+      	panose-1:2 11 6 4 2 2 2 2 2 4;}
+      @font-face
+      	{font-family:Constantia;
+      	panose-1:2 3 6 2 5 3 6 3 3 3;}
+       /* Style Definitions */
+      p.MsoNormal, li.MsoNormal, div.MsoNormal
+      	{margin-top:0cm;
+      	margin-right:0cm;
+      	margin-bottom:10.0pt;
+      	margin-left:0cm;
+      	line-height:115%;
+      	font-size:11.0pt;
+      	font-family:Calibri;}
+      p.MsoCommentText, li.MsoCommentText, div.MsoCommentText
+      	{margin-top:0cm;
+      	margin-right:0cm;
+      	margin-bottom:10.0pt;
+      	margin-left:0cm;
+      	font-size:12.0pt;
+      	font-family:Calibri;}
+      p.MsoHeader, li.MsoHeader, div.MsoHeader
+      	{margin:0cm;
+      	margin-bottom:.0001pt;
+      	font-size:12.0pt;
+      	font-family:Calibri;}
+      p.MsoFooter, li.MsoFooter, div.MsoFooter
+      	{margin:0cm;
+      	margin-bottom:.0001pt;
+      	font-size:12.0pt;
+      	font-family:Calibri;}
+      p.MsoCommentSubject, li.MsoCommentSubject, div.MsoCommentSubject
+      	{margin-top:0cm;
+      	margin-right:0cm;
+      	margin-bottom:10.0pt;
+      	margin-left:0cm;
+      	font-size:10.0pt;
+      	font-family:Calibri;
+      	font-weight:bold;}
+      p.MsoAcetate, li.MsoAcetate, div.MsoAcetate
+      	{margin:0cm;
+      	margin-bottom:.0001pt;
+      	font-size:9.0pt;
+      	font-family:"Times New Roman";}
+      span.a2
+      	{font-weight:bold;}
+      span.a3
+      	{font-family:"Times New Roman";}
+      .MsoChpDefault
+      	{font-family:Calibri;}
+       /* Page Definitions */
+      @page WordSection1
+      	{size:595.0pt 842.0pt;
+      	margin:29.4pt 42.5pt 0cm 1.0cm;}
+      div.WordSection1
+      	{page:WordSection1;}
+      span.insert {
+        font-weight: bold;
+      }
+      -->
+  %body{:lang => "IT"}
+    .WordSection1
+      %p.MsoNormal{:style => "text-autospace:none"}
+        =wicked_pdf_image_tag 'image001.png', :align => "left", :height => "54", :hspace => "12", :width => "157"
+      %p.MsoNormal{:style => "text-autospace:none"}
+        %b
+          %u
+            %span{:lang => "IT", :style => "font-family:\"Arial Unicode MS\";color:red"}
+              %span{:style => "text-decoration:\n none"}  
+      %p.MsoNormal{:style => "text-autospace:none"}
+        %b
+          %u
+            %span{:lang => "IT", :style => "font-family:\"Arial Unicode MS\";color:red"}
+              %span{:style => "text-decoration:\n none"}  
+      %p.MsoNormal{:style => "text-autospace:none"}
+        %b
+          %u
+            %span{:lang => "IT", :style => "font-family:\"Arial Unicode MS\";color:red"}
+              CHECK LIST : SERVE PER
+              PREPARAZIONE BARA ED ESPOSIZIONE SALMA
+      %p.MsoNormal{:style => "text-autospace:none"}
+        %span{:lang => "IT", :style => "font-family:\n\"Arial Unicode MS\""}
+          DEFUNTO:
+        %span.insert
+          = @order.deceased.name
+      %p.MsoNormal{:style => "text-autospace:none"}
+        %span{:lang => "IT", :style => "font-family:\n\"Arial Unicode MS\""}
+          DATA DI NASCITA:
+        %span.insert
+          = @order.deceased.birthday
+      %p.MsoNormal{:style => "text-autospace:none"}
+        %span{:lang => "IT", :style => "font-family:\n\"Arial Unicode MS\""}
+          FUNERALE A:           
+        %span.insert
+          = @order.deceased.deathday
+      %p.MsoNormal{:style => "text-autospace:none"}
+        %span{:lang => "IT", :style => "font-family:\n\"Arial Unicode MS\""}
+          ALLE ORE:
+        %span.insert
+          = @order.deceased.funeral_time
+      %p.MsoNormal{:style => "text-autospace:none"}
+        %span{:lang => "IT", :style => "font-family:\n\"Arial Unicode MS\""}
+          ESPOSTO ALLE CELLE DI:
+        %span.insert
+          = @order.deceased.cemetery_name
+      %p.MsoNormal{:style => "text-autospace:none"}
+        %span{:lang => "IT", :style => "font-family:\n\"Arial Unicode MS\""}
+          GIORNO DELL Õ ESPOSIZIONE:
+          -#= @order.deceased.vistday
+      %p.MsoNormal{:style => "text-autospace:none"}
+        %span{:lang => "IT", :style => "font-family:\n\"Arial Unicode MS\""}
+          ORARI OBITORIO:
+          %a{:name => "morgue"}
+      %p.MsoNormal{:style => "text-autospace:none"}
+        %span{:lang => "IT", :style => "font-family:\n\"Arial Unicode MS\""}
+          ORARIO PARTENZA:
+          %b                          
+        %span{:lang => "IT", :style => "font-family:\"Times New Roman\""}                            
+        %span{:lang => "IT", :style => "font-family:\"Arial Unicode MS\""} IL:
+      %p.MsoNormal{:style => "text-autospace:none"}
+        %b
+          %u
+            %span{:lang => "IT", :style => "font-family:\"Arial Unicode MS\";color:red"}
+              NB: AVVISARE SEMPRE LA
+              FAMIGLIA SUGLI ORARI E VISITE
+      %p.MsoNormal{:style => "text-autospace:none"}
+        %span{:lang => "IT", :style => "font-family:\n\"Arial Unicode MS\""}
+          FAMILIARE SIG:
+        %span.insert
+          = @order.relative.name
+      %p.MsoNormal{:style => "text-autospace:none"}
+        %span{:lang => "IT", :style => "font-family:\n\"Arial Unicode MS\""}
+          TELEFONO:
+        %span.insert
+          = @order.relative.phone
+        %b
+          %span{:lang => "IT", :style => "font-size:14.0pt;line-height:115%;font-family:\"Arial Unicode MS\""}                   
+        %span{:lang => "IT", :style => "font-family:\"Arial Unicode MS\""}
+          GRADO DI PARENTELA:
+        %span.insert
+          = @order.relative.relationship
+      %p.MsoNormal{:style => "text-autospace:none"}
+        %span{:lang => "IT", :style => "font-family:\n\"Arial Unicode MS\""}
+          CELLULARE:
+          %a{:name => "relativemobile"}
+      %p.MsoNormal{:style => "text-autospace:none"}
+        %span{:lang => "IT", :style => "font-family:\n\"Arial Unicode MS\""} COFANO CONSEGNATO DA:
+        %a{:name => "coffinissuedby"}
+      %p.MsoNormal{:style => "text-autospace:none"}
+        %span{:lang => "IT", :style => "font-family:\n\"Arial Unicode MS\""}
+          CAMERA ARDENTE TIPO:
+          %a{:name => "crematoriumkind"}
+      %p.MsoNormal{:style => "text-autospace:none"}
+        %span{:lang => "IT", :style => "font-family:\n\"Arial Unicode MS\""} TRUCCO FATTO:
+      %p.MsoNormal{:style => "text-autospace:none"}
+        %span{:lang => "IT", :style => "font-family:\n\"Arial Unicode MS\""}
+          [    ] LOCULO             [ 
+            ] TERRA                [
+             ]   CREMAZIONE
+      %p.MsoNormal{:style => "text-autospace:none"}
+        %span{:lang => "IT", :style => "font-family:\n\"Arial Unicode MS\""}
+          ADDETTO PREPARAZIONE BARA:
+          %a{:name => "coffinprepareby"}
+      %p.MsoNormal{:style => "text-autospace:none"}
+        %span{:lang => "IT", :style => "font-family:\n\"Arial Unicode MS\""}
+          NOTE:
+          %a{:name => "note"}
+      %p.MsoNormal{:style => "text-autospace:none"}
+        %span{:lang => "IT", :style => "font-family:\n\"Arial Unicode MS\""}
+          tipo cassa:
+          %a{:name => "coffinkind"}
+      %p.MsoNormal{:style => "margin-left:7.1pt;text-indent:-7.1pt;text-autospace:\nnone"}
+        =wicked_pdf_image_tag 'image002.png', :align => "left", :height => "79", :hspace => "12", :width => "527"

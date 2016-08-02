@@ -1,0 +1,128 @@
+!!!
+%html
+  %head
+    %meta{:content => "text/html; charset=UTF-8"}/
+    %meta{:charset => "utf-8" }
+    :css
+      <!--
+       /* Font Definitions */
+      @font-face
+      	{font-family:Arial;
+      	panose-1:2 11 6 4 2 2 2 2 2 4;}
+      @font-face
+      	{font-family:Mangal;
+      	panose-1:0 0 0 0 0 0 0 0 0 0;}
+      @font-face
+      	{font-family:"Cambria Math";
+      	panose-1:0 0 0 0 0 0 0 0 0 0;}
+      @font-face
+      	{font-family:Tahoma;
+      	panose-1:0 0 0 0 0 0 0 0 0 0;}
+      @font-face
+      	{font-family:SimSun;
+      	panose-1:2 1 6 0 3 1 1 1 1 1;}
+      @font-face
+      	{font-family:"Lucida Sans";
+      	panose-1:2 11 6 2 3 5 4 2 2 4;}
+       /* Style Definitions */
+      p.MsoNormal, li.MsoNormal, div.MsoNormal
+      	{margin:0cm;
+      	margin-bottom:.0001pt;
+      	font-size:12.0pt;
+      	font-family:"Times New Roman";}
+      p.MsoAcetate, li.MsoAcetate, div.MsoAcetate
+      	{margin:0cm;
+      	margin-bottom:.0001pt;
+      	font-size:8.0pt;
+      	font-family:"Tahoma","sans-serif";}
+      span.a
+      	{font-family:"Tahoma","sans-serif";}
+      .MsoChpDefault
+      	{font-size:11.0pt;
+      	font-family:Calibri;}
+      .MsoPapDefault
+      	{margin-bottom:10.0pt;
+      	line-height:115%;}
+      @page WordSection1
+      	{size:595.3pt 841.9pt;
+      	margin:70.85pt 2.0cm 0cm 2.0cm;}
+      div.WordSection1
+      	{page:WordSection1;}
+      span.insert {
+        font-weight: bold}
+      -->
+
+  %body{:lang => "IT"}
+    .WordSection1
+      %p.MsoNormal
+        = wicked_pdf_image_tag 'image001.png', :height => "37", :width => "101"
+      %br
+      %p.MsoNormal
+        %b
+          %span{:style => "font-size:16.0pt"} ORDINE FIORI
+      %br
+      %p.MsoNormal
+        %span{:style => "font-size:10.0pt;font-family:Arial"}
+          DEFUNTO:
+          %span.insert
+            = "#{@order.deceased.name}"
+      %br
+      %p.MsoNormal
+        %span{:style => "font-size:10.0pt;font-family:Arial"}
+          FUNERALE A:
+          %span.insert
+            = @order.deceased.funeral_place
+      %br
+      %p.MsoNormal
+        %span{:style => "font-size:10.0pt;font-family:Arial"}
+          IL GIORNO:
+          %span.insert
+            = @order.deceased.funeral_day.strftime("%d/%M/%Y")
+          ORE:
+          %span.insert
+            = @order.deceased.funeral_time
+      %p.MsoNormal
+        %span{:style => "font-size:14.0pt;font-family:Arial"} --------------------------------------------------------------------------------
+      %p.MsoNormal
+        %span{:style => "font-size:10.0pt;font-family:Arial"}
+          FIORI PRONTI PER IL GIORNO:
+          %span.insert
+            = @order.deceased.flowerday
+      %br
+      %p.MsoNormal
+        %span{:style => "font-size:10.0pt;font-family:Arial"}
+          ALLE ORE:
+          %span.insert
+            = @order.deceased.flowertime
+      %p.MsoNormal
+        %span{:style => "font-size:14.0pt;font-family:Arial"} --------------------------------------------------------------------------------
+      - @order.flowers.each do |f|
+        %p.MsoNormal
+          %span{:style => "font-size:10.0pt;font-family:Arial"}
+            TIPO COMPO, €:
+            %span.insert
+              = f.price
+        %br
+        %p.MsoNormal
+          %span{:style => "font-size:10.0pt;font-family:Arial"}
+            TIPO FIORI:
+            %span.insert
+              = f.kind
+        %br
+        %p.MsoNormal
+          %span{:style => "font-size:10.0pt;font-family:Arial"}
+            TESTO:
+            %span.insert
+              = f.text
+      %br  
+      %p.MsoNormal
+        %span{:style => "font-size:10.0pt;font-family:Arial"}
+          note: 
+          %i
+            %span.insert
+              = @order.deceased.note
+      %p.MsoNormal
+        %span{:style => "font-size:10.0pt;font-family:Arial"}  
+      %p.MsoNormal
+        %span{:style => "font-size:10.0pt;font-family:Arial"}
+          TELEFONO O ALTRI RIFERIMENTI:   
