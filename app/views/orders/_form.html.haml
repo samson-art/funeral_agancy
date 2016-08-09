@@ -1,78 +1,70 @@
-.row
-  .card.col.s10.offset-s1
-    .card-content
-      %h4
-        = 'Edit order: '
-        %strong
-          ="№#{@order.id}"
-      .divider
-      = simple_form_for @order, :html => {:multipart => true}, label: false do |f|
-        = f.error_notification
-        .section
-          = f.simple_fields_for :deceased do |p|
-            .row
-              .col.s12
-                %h5.blue-grey-text.text-darken-2
-                  %i.material-icons.left looks_one
-                  = 'General info'
-            .row
-              = p.input :name, input_html: { class: 'validate' }, wrapper_html: { class: 'col s12' }, label: false do
-                %i.material-icons.left.prefix account_circle
-                = p.label :name
-                = p.input_field :name
-            .row
-              = p.input :birthday, label: false, input_html: { class: 'validate datepicker' }, wrapper_html: { class: 'col s6' } do
-                %i.material-icons.left.prefix date_range
-                = p.label :birthday
-                = p.input_field :birthday, as: :string, class: 'datepicker'
-              = p.input :deathday, label: false, input_html: { class: 'validate datepicker' }, wrapper_html: { class: 'col s6' } do
-                %i.material-icons.left.prefix date_range
-                = p.label :deathday
-                = p.input_field :deathday, as: :string, class: 'datepicker'
-            .row.valign-wrapper
-              .col.s6.valign
-                = p.input :funeral_place, input_html: { class: 'validate' }, label: false do
-                  %i.material-icons.left.prefix location_on
-                  = p.label :funeral_place
-                  = p.input_field :funeral_place
-                %br
-                .row
-                  = p.input :funeral_day, label: false, input_html: { class: 'validate datepicker' }, wrapper_html: { class: 'col s6' } do
-                    %i.material-icons.left.prefix date_range
-                    = p.label :funeral_day
-                    = p.input_field :funeral_day, as: :string, class: 'datepicker'
-                  = p.input :funeral_time, label: false, input_html: { class: 'validate timepicker' }, wrapper_html: { class: 'col s6' } do
-                    %i.material-icons.left.prefix access_time
-                    = p.label :funeral_time
-                    = p.input_field :funeral_time, as: :string
-              .col.s6.center-align
-                = image_tag @order.deceased.photo.url(:thumb), class: 'responsive-img'
-                = p.input :photo, as: :photo, label: false, wrapper_html: { class: 'file-field ' }
-            .row
-              .col.s12
-                = p.input :cemetery_name, input_html: { class: 'validate' }
-        .divider
-        = f.simple_fields_for :relative do |p|
-          .section
-            .row
-              %h5.blue-grey-text.text-darken-2
-                %i.material-icons.left looks_two
-                = 'Relative info'
-            .row
-              = p.input :name, input_html: { class: 'validate' }, wrapper_html: { class: 'col s6' }
-        .divider
-        = f.simple_fields_for :flowers do |flower|
-          .section
-            .row.blue-grey-text.text-darken-2
-              %h5.left
-                %i.material-icons local_florist
-                ='Flowers module'
-              = link_to_add_association f, :flowers, class: 'right btn-large btn-floating tooltipped', data: { tooltip: 'Add new flower position to current order' } do
-                %i.material-icons.blue-grey.darken-1 playlist_add
-            .row
-              =render 'flower_fields', f: flower
+= simple_form_for @order, :html => {:multipart => true}, label: false do |f|
+  = f.error_notification
+  .section
+    = f.simple_fields_for :deceased do |p|
+      .row
+        .col.s12
+          %h5.blue-grey-text.text-darken-2
+            %i.material-icons.left looks_one
+            = 'General info'
+      .row
+        = p.input :name, input_html: { class: 'validate' }, wrapper_html: { class: 'col s12' }, label: false do
+          %i.material-icons.left.prefix account_circle
+          = p.label :name
+          = p.input_field :name
+      .row
+        = p.input :birthday, label: false, input_html: { class: 'validate datepicker' }, wrapper_html: { class: 'col s6' } do
+          %i.material-icons.left.prefix date_range
+          = p.label :birthday
+          = p.input_field :birthday, as: :string, class: 'datepicker'
+        = p.input :deathday, label: false, input_html: { class: 'validate datepicker' }, wrapper_html: { class: 'col s6' } do
+          %i.material-icons.left.prefix date_range
+          = p.label :deathday
+          = p.input_field :deathday, as: :string, class: 'datepicker'
+      .row.valign-wrapper
+        .col.s6.valign
+          = p.input :funeral_place, input_html: { class: 'validate' }, label: false do
+            %i.material-icons.left.prefix location_on
+            = p.label :funeral_place
+            = p.input_field :funeral_place
+          %br
+          .row
+            = p.input :funeral_day, label: false, input_html: { class: 'validate datepicker' }, wrapper_html: { class: 'col s6' } do
+              %i.material-icons.left.prefix date_range
+              = p.label :funeral_day
+              = p.input_field :funeral_day, as: :string, class: 'datepicker'
+            = p.input :funeral_time, label: false, input_html: { class: 'validate timepicker' }, wrapper_html: { class: 'col s6' } do
+              %i.material-icons.left.prefix access_time
+              = p.label :funeral_time
+              = p.input_field :funeral_time, as: :string
+        .col.s6.center-align
+          = image_tag @order.deceased.photo.url(:thumb), class: 'responsive-img'
+          = p.input :photo, as: :photo, label: false, wrapper_html: { class: 'file-field ' }
+      .row
+        .col.s12
+          = p.input :cemetery_name, input_html: { class: 'validate' }
+  .divider
+  = f.simple_fields_for :relative do |p|
+    .section
+      .row
+        %h5.blue-grey-text.text-darken-2
+          %i.material-icons.left looks_two
+          = 'Relative info'
+      .row
+        = p.input :name, input_html: { class: 'validate' }, wrapper_html: { class: 'col s6' }
+  .divider
 
-        .section
-          .row.center-align
-            =f.submit class: 'btn btn-large' do
-              %i.material-icons.left save
+  .section
+    .row.blue-grey-text.text-darken-2
+      %h5.left
+        %i.material-icons local_florist
+        ='Flowers module'
+      = link_to_add_association f, :flowers, class: 'right btn-large btn-floating tooltipped add-flower', data: { tooltip: 'Add new flower position to current order' } do
+        %i.material-icons.blue-grey.darken-1 playlist_add
+    #flowers.row
+      = f.simple_fields_for :flowers do |flower|
+        =render 'flower_fields', f: flower
+  .section
+    .row.center-align
+      =f.submit class: 'btn btn-large' do
+        %i.material-icons.left save

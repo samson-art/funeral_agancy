@@ -1,2 +1,10 @@
-= render 'form'
+.row
+  .card.col.s10.offset-s1
+    .card-content
+      %h4
+        = 'Edit order: '
+        %strong
+          ="№#{@order.id}"
+      .divider
+      = render 'form'
 

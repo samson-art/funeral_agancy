@@ -36,6 +36,12 @@ var ready = function(){
 
     $('.dropdown-button').dropdown();
 
+    $('.add-flower')
+        .data("association-insertion-method", 'append')
+        .data("association-insertion-node",  function(link){
+            return link.closest('.row').next('#flowers.row')
+        });
+
     Materialize.updateTextFields();
 
     console.log(gon.cemetery_names);

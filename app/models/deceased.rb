@@ -37,10 +37,14 @@ class Deceased < ActiveRecord::Base
 
   private
     def set_date(date)
-      date.strftime('%d/%m/%Y')
+      if date.present?
+        date.strftime('%d/%m/%Y')
+      end
     end
 
     def set_time(time)
-      time.strftime('%H:%M')
+      if time.present?
+        time.strftime('%H:%M')
+      end
     end
 end
