@@ -2,14 +2,21 @@
 %html
   %head
     %meta{charset: 'utf-8'}
-    %meta{:content => 'width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no', :name => 'viewport'}/
+    %meta{:content => 'width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no', :name => 'viewport'}
     %title=t('app.name')
+    = Gon::Base.render_data({})
+    = include_gon(:init => true)
     = stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true
     = javascript_include_tag 'application', 'data-turbolinks-track' => true
+    = stylesheet_link_tag 'https://fonts.googleapis.com/icon?family=Material+Icons'
     = csrf_meta_tags
-  %body
-    =render 'topbar'
-    .container
+    -#%meta{ name: 'turbolinks-root', content: '/orders'}
+  %body.blue-grey.lighten-5
+    =render 'application/topbar'
+    =render 'application/sidebar'
+    %main.section
       =render 'flash_messages'
-      = yield
+      .row
+        .col.s12
+          = yield
     =render 'footer'

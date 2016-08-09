@@ -1,0 +1,10 @@
+.card.col.m4
+  .card-content
+    .card-title
+      %span= 'Flower'
+      = link_to_remove_association f, class: 'right' do
+        %i.material-icons remove_circle
+    .divider
+    = f.input :kind
+    = f.input :price
+    = f.input :text

@@ -1,25 +1,11 @@
-.page-header
-  %h1 Listing orders
+.page-header.row
+  .col.s5
+    %h3 Listing orders
 
-%ol.breadcrumb
-  =render_breadcrumbs :tag => :li, :separator => ''
+#order-panel
+  =render "order_#{@view}", orders: @orders
+  .center
+    =will_paginate @orders
 
-= link_to new_order_path, class: 'btn btn-primary' do
-  %i.glyphicon.glyphicon-plus-sign
-  = t('app.buttons.add')
 
-.table-responsive
-  %table.table.table-hover
-    %thead
-      %tr
-        %th= Deceased.human_attribute_name(:name)
-        %th= Deceased.human_attribute_name(:funeral_day)
-        %th= Relative.human_attribute_name(:name)
-        %th= Relative.human_attribute_name(:mobile)
-        %th
-        %th
-        %th
-
-    %tbody
-      - for order in @orders do
-        = render 'orders/order', order: order
+-#=render 'fabbuttons'

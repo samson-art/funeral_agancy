@@ -1,6 +1,6 @@
 class Order < ActiveRecord::Base
-  belongs_to :deceased, autosave: true
-  belongs_to :relative, autosave: true
+  belongs_to :deceased, autosave: true, dependent: :delete
+  belongs_to :relative, autosave: true, dependent: :delete
   has_many :documents, dependent: :delete_all
   has_many :flowers, dependent: :delete_all
 

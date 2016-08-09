@@ -1,0 +1,16 @@
+%ul.collection
+  -for o in orders do
+    %li.collection-item.avatar
+      =image_tag o.deceased.photo(:thumb), class: 'circle', alt: "#{o.deceased.name} photo"
+      %span.title= o.deceased.name
+      %p
+        %strong Funeral:
+        = "#{o.deceased.funeral_time.strftime('%H:%M')} #{o.deceased.funeral_day.strftime('%d/%m/%Y')}"
+        %br
+        %strong Cemetery:
+        = "#{o.deceased.cemetery_name}"
+        %br
+        %strong Relation:
+        = "#{o.relative.name}, #{o.relative.phone}"
+      =link_to order_path(o), class: 'secondary-content btn-large btn-floating transparent z-depth-0' do
+        %i.material-icons.blue-grey-text forward

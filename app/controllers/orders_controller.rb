@@ -1,7 +1,6 @@
-require 'docx'
+require 'gon'
 
 class OrdersController < ApplicationController
-
   TEMPLATES = [
       {
           kind: :service_list, file:'service_list.docx'
@@ -13,24 +12,21 @@ class OrdersController < ApplicationController
 
   before_action :set_order, only: [:show, :edit, :update, :destroy, :download, :docs_generate]
 
-  add_breadcrumb I18n.t('breadcrumbs.orders.homepage'), :orders_path
-
   # GET /orders
   # GET /orders.json
   def index
-    @orders = Order.full
+    @orders = Order.full.paginate(:page => params[:page], :per_page => 4)
+    @view = params[:view] || 'card'
   end
 
   # GET /orders/1
   # GET /orders/1.json
   def show
-    add_breadcrumb I18n.t('breadcrumbs.orders.show') + @order.id.to_s, order_path(@order)
 
   end
 
   # GET /orders/new
   def new
-    add_breadcrumb I18n.t('breadcrumbs.orders.new'), '#'
     @order = Order.new
     @order.build_deceased
     @order.build_relative
@@ -39,7 +35,10 @@ class OrdersController < ApplicationController
 
   # GET /orders/1/edit
   def edit
-    add_breadcrumb I18n.t('breadcrumbs.orders.edit') + @order.id.to_s, edit_order_path(@order)
+    @funeral_places = Hash[Deceased.funeral_places.map{|x| [x, nil]}]
+    gon.funeral_places = @funeral_places
+    @cemetery_names = Hash[Deceased.cemetery_names.map{|x| [x, nil]}]
+    gon.cemetery_names = @cemetery_names
   end
 
   # POST /orders
@@ -61,7 +60,7 @@ class OrdersController < ApplicationController
   # PATCH/PUT /orders/1.json
   def update
     respond_to do |format|
-      if @order.relative.update(order_params[:relative_attributes]) and @order.deceased.update!(order_params[:deceased_attributes])
+      if @order.relative.update!(order_params[:relative_attributes]) and @order.deceased.update!(order_params[:deceased_attributes])
         format.html { redirect_to @order, notice: 'Order was successfully updated.' }
         format.json { render :show, status: :ok, location: @order }
       else

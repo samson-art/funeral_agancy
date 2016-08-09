@@ -1,0 +1,23 @@
+.row
+  -orders.each_with_index do |o, i|
+    .col.s12.m6
+      .card.small
+        .card-content
+          .card-title
+            = o.deceased.name
+            = link_to order_path(o), class: 'right btn-floating waves-effect waves-teal' do
+              %i.material-icons open_in_new
+          .divider
+          .section.row.valign-wrapper
+            .col.m4.valign
+              = image_tag o.deceased.photo.url(:thumb), class: 'responsive-img center'
+            .col.m8.valign
+              %p
+                = 'Funerale: '
+                %strong= "#{o.deceased.funeral_time} #{o.deceased.funeral_day}"
+                %br
+                = 'Cemetery: '
+                %strong= "#{o.deceased.cemetery_name}"
+                %br
+                = 'Relative: '
+                %strong= "#{o.relative.name}, phone: #{o.relative.mobile}"

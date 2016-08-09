@@ -1,8 +1,12 @@
 class DocumentsController < ApplicationController
-  before_action :set_order
+  before_action :set_order, only: [:pdf]
+
+  def index
+
+  end
 
   def pdf
-    kind = params[:format]
+    kind = params[:kind]
     render pdf: "#{@order.deceased.name.upcase}_#{kind}", template: "documents/#{kind}"
   end
 

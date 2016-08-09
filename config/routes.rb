@@ -5,8 +5,9 @@ Rails.application.routes.draw do
       get 'pdf' => 'documents#pdf', as: 'pdf'
 
     end
-
   end
+  resources :documents, only: [:index]
+  resources :relatives, as: :contacts, only: [:index]
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 

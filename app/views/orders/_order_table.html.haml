@@ -1,0 +1,27 @@
+.card
+  %table.table.highlight.centered
+    %thead
+      %th №
+      %th Name
+      %th Funeral at
+      %th Relative
+      %th Mobile number
+      %th
+    %tbody
+    -orders.each_with_index do |o, i|
+      %tr
+        %td= i+1
+        %td= o.deceased.name
+        %td= "#{o.deceased.funeral_time.strftime('%H:%M')} #{o.deceased.funeral_day.strftime('%d/%M/%Y')}"
+        %td= o.relative.name
+        %td= o.relative.mobile
+        %td
+          =link_to nil, class: 'dropdown-button btn-flat waves-effect waves-teal', data: { activates: "order-#{o.id}-menu" } do
+            %i.material-icons arrow_drop_down
+          %ul{:id => "order-#{o.id}-menu", class: 'dropdown-content' }
+            %li
+              =link_to order_path(o) do
+                ='Show'
+            %li=link_to 'Edit', edit_order_path(o)
+            %li.divider
+            %li=link_to 'Delete', order_path(o), method: :delete, confirm: 'Are you sure?', class: 'red-text'

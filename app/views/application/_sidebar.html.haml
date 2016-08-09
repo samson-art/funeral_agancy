@@ -1,0 +1,53 @@
+%ul#sidenav.side-nav.fixed
+  %li.no-padding
+    .userView.blue-grey
+      =link_to nil do
+        =image_tag 'thumb/missing_photo.png', class: 'circle'
+      = link_to nil, class: 'name' do
+        = 'Artyom Samsonov'
+      = link_to nil, class: 'email' do
+        = 'samsonov68rus@gmail.com'
+  %li.no-padding
+    %ul.collapsible.collapsible-accordion{ :data => { :collapsible => 'accordion' } }
+      %li.bold
+        %a{ class: "collapsible-header waves-effect waves-teal #{(@orders.present? or @order.present?) ? 'active': ''}" }
+          %i.material-icons.left list
+          = 'Orders'
+        .collapsible-body
+          %ul
+            %li
+              = link_to orders_path(view: 'card'), class: 'waves-effect waves-teal' do
+                = 'Cards'
+                %i.material-icons.right view_module
+            %li
+              = link_to orders_path(view: 'table'), class: 'waves-effect waves-teal' do
+                ='Table'
+                %i.material-icons.right grid_on
+            %li
+              = link_to orders_path(view: 'list'), class: 'waves-effect waves-teal' do
+                = 'List'
+                %i.material-icons.right view_list
+      %li.bold
+        %a{ class: "collapsible-header waves-effect waves-teal #{(@documents.present? or @document.present?) ? 'active': nil}" }
+          %i.material-icons folder_open
+          = 'Documents'
+        .collapsible-body
+          %ul.disabled
+            %li
+              =link_to documents_path do
+                ='Last'
+            %li
+              =link_to documents_path do
+                ='Waiting'
+      %li.bold
+        %a{ class: "collapsible-header waves-effect waves-teal #{@contacts.present? or @contact.present? ? 'active': nil}" }
+          %i.material-icons contacts
+          = 'Contacts'
+        .collapsible-body
+          %ul
+            %li
+              =link_to contacts_path do
+                ='List'
+            %li
+              =link_to contacts_path do
+                ='Marked'

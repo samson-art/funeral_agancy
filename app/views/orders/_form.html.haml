@@ -1,48 +1,78 @@
-= simple_form_for(@order) do |f|
-  = f.error_notification
-
-  .form-inputs
-    .panel.panel-info
-      .panel-heading
-        %h3.panel-title= t('app.forms.deceased')
-      .panel-body
-        = f.simple_fields_for :deceased do |p|
-          = p.input :name
-          = p.input :birthday, start_year: Date.today.year - 125, end_year: Date.today.year, order: [:day, :month, :year]
-          = p.input :deathday, start_year: Date.today.year - 10, end_year: Date.today.year, order: [:day, :month, :year]
-          = p.input :funeral_day, as: :date, start_year: Date.today.year - 10, end_year: Date.today.year + 1, order: [:day, :month, :year]
-          = p.input :funeral_place do
-            = p.input_field :funeral_place, list: 'funeral_place'
-            %datalist#funeral_place
-              - for fp in Deceased.full.uniq.pluck(:funeral_place) do
-                %option{value: fp}
-          = p.input :funeral_time, as: :time, :minute_step => 15, :start_hour => 6
-          = p.input :coffin_kind
-          = p.input :coffin_prepare_by
-          = p.input :coffin_issued_by
-          = p.input :note
-          -#TODO scope
-          .form-group
-            = p.label :cemetery_name
-            = p.input_field :cemetery_name, list: 'cemetery_name'
-            %datalist#cemetery_name
-              - for n in Deceased.full.uniq.pluck(:cemetery_name) do
-                %option{value: "#{n}"}
-          = p.input :crematorium_kind, collection: Deceased.crematorium_kinds, input_html: {}, prompt: 'Select crematorium kind'
-          = p.input :photo
-    .panel.panel-info
-      .panel-heading
-        %h3.panel-title= t('app.forms.relative')
-      .panel-body
+.row
+  .card.col.s10.offset-s1
+    .card-content
+      %h4
+        = 'Edit order: '
+        %strong
+          ="№#{@order.id}"
+      .divider
+      = simple_form_for @order, :html => {:multipart => true}, label: false do |f|
+        = f.error_notification
+        .section
+          = f.simple_fields_for :deceased do |p|
+            .row
+              .col.s12
+                %h5.blue-grey-text.text-darken-2
+                  %i.material-icons.left looks_one
+                  = 'General info'
+            .row
+              = p.input :name, input_html: { class: 'validate' }, wrapper_html: { class: 'col s12' }, label: false do
+                %i.material-icons.left.prefix account_circle
+                = p.label :name
+                = p.input_field :name
+            .row
+              = p.input :birthday, label: false, input_html: { class: 'validate datepicker' }, wrapper_html: { class: 'col s6' } do
+                %i.material-icons.left.prefix date_range
+                = p.label :birthday
+                = p.input_field :birthday, as: :string, class: 'datepicker'
+              = p.input :deathday, label: false, input_html: { class: 'validate datepicker' }, wrapper_html: { class: 'col s6' } do
+                %i.material-icons.left.prefix date_range
+                = p.label :deathday
+                = p.input_field :deathday, as: :string, class: 'datepicker'
+            .row.valign-wrapper
+              .col.s6.valign
+                = p.input :funeral_place, input_html: { class: 'validate' }, label: false do
+                  %i.material-icons.left.prefix location_on
+                  = p.label :funeral_place
+                  = p.input_field :funeral_place
+                %br
+                .row
+                  = p.input :funeral_day, label: false, input_html: { class: 'validate datepicker' }, wrapper_html: { class: 'col s6' } do
+                    %i.material-icons.left.prefix date_range
+                    = p.label :funeral_day
+                    = p.input_field :funeral_day, as: :string, class: 'datepicker'
+                  = p.input :funeral_time, label: false, input_html: { class: 'validate timepicker' }, wrapper_html: { class: 'col s6' } do
+                    %i.material-icons.left.prefix access_time
+                    = p.label :funeral_time
+                    = p.input_field :funeral_time, as: :string
+              .col.s6.center-align
+                = image_tag @order.deceased.photo.url(:thumb), class: 'responsive-img'
+                = p.input :photo, as: :photo, label: false, wrapper_html: { class: 'file-field ' }
+            .row
+              .col.s12
+                = p.input :cemetery_name, input_html: { class: 'validate' }
+        .divider
         = f.simple_fields_for :relative do |p|
-          = p.input :name
-          .form-group
-            = p.label :relationship
-            = p.input_field :relationship, list: 'relationship'
-            %datalist#relationship
-              - for n in Relative.full.uniq.pluck(:relationship) do
-                %option{value: "#{n}"}
-          = p.input :phone, as: :tel, pattern: '^(?:0|\(?\+33\)?\s?|0033\s?)[1-79](?:[\.\-\s]?\d\d){4}$'
-          = p.input :mobile, as: :tel, pattern: '^(?:0|\(?\+33\)?\s?|0033\s?)[1-79](?:[\.\-\s]?\d\d){4}$'
-  .form-actions
-    = f.button :submit
+          .section
+            .row
+              %h5.blue-grey-text.text-darken-2
+                %i.material-icons.left looks_two
+                = 'Relative info'
+            .row
+              = p.input :name, input_html: { class: 'validate' }, wrapper_html: { class: 'col s6' }
+        .divider
+        = f.simple_fields_for :flowers do |flower|
+          .section
+            .row.blue-grey-text.text-darken-2
+              %h5.left
+                %i.material-icons local_florist
+                ='Flowers module'
+              = link_to_add_association f, :flowers, class: 'right btn-large btn-floating tooltipped', data: { tooltip: 'Add new flower position to current order' } do
+                %i.material-icons.blue-grey.darken-1 playlist_add
+            .row
+              =render 'flower_fields', f: flower
+
+        .section
+          .row.center-align
+            =f.submit class: 'btn btn-large' do
+              %i.material-icons.left save

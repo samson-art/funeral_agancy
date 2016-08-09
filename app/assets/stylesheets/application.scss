@@ -10,20 +10,89 @@
  * defined in the other CSS/SCSS files in this directory. It is generally better to create a new
  * file per style scope.
  *
+ *= require bootstrap-material-datetimepicker
+ *= require normalize-rails
  *= require_tree .
  *= require_self
  */
+@import "materialize";
 
-@import "bootstrap-sprockets";
-@import "bootstrap";
-//@import "./custom_bootstrap";
+$sidebar-width: 250px;
 
-footer.footer {
-  margin-top: 100px;
-  padding-top: 50px;
-  padding-bottom: 50px;
+#sidenav {
+  width: $sidebar-width;
+}
+
+main, #topbar, .topnav {
+  //margin-top: 60px;
+  margin-left: $sidebar-width;
+}
+
+#topbar nav {
+  padding-right: $sidebar-width;
+}
+
+#topbar nav .nav-wrapper {
+  //padding-left: 25px;
+}
+
+.documents.pinned {
+  margin-top: 58px;
+  left: 66.7%!important;
+  width: 31.7%!important;
+
+}
+
+.info.popout.collapsible {
+  margin-right: -3.5%;
+  margin-left: -3.5%;
+  width: 107%;
+  li {
+    margin: 0 0;
+  }
+}
+
+#order-fab {
+  top: auto!important;
+}
+#order-fab.pin-bottom {
+  position: relative!important;
+
+}
+
+footer.page-footer {
+  margin-left: $sidebar-width;
 }
 
 span.insert {
   font-weight: bold;
+}
+
+.pagination a li.active {
+  color: #fff;
+  background-color: #455A64;
+}
+
+.pagination a li {
+  color: #444;
+  display: inline-block;
+  font-size: 1.2rem;
+  padding: 0 10px;
+  line-height: 30px;
+}
+
+#toast-container {
+  top: auto !important;
+  left: auto !important;
+  bottom: 10%;
+  right:7%;
+
+  .success {
+
+  }
+
+  .warn {
+
+  }
+
 }
