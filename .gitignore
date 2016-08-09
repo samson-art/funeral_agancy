@@ -16,4 +16,6 @@
 !/log/.keep
 /tmp
 
-/bower_components/
+/public/
+/log/
+/vendor/
