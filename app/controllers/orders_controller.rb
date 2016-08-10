@@ -39,6 +39,8 @@ class OrdersController < ApplicationController
     gon.funeral_places = @funeral_places
     @cemetery_names = Hash[Deceased.cemetery_names.map{|x| [x, nil]}]
     gon.cemetery_names = @cemetery_names
+    @relationships = Hash[Relative.relationships.map{|x| [x, nil]}]
+    gon.relationships = @relationships
   end
 
   # POST /orders

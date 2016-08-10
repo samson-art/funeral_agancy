@@ -36,13 +36,31 @@
             = p.input :funeral_time, label: false, input_html: { class: 'validate timepicker' }, wrapper_html: { class: 'col s6' } do
               %i.material-icons.left.prefix access_time
               = p.label :funeral_time
-              = p.input_field :funeral_time, as: :string
+              = p.input_field :funeral_time, as: :string, class: 'timepicker'
         .col.s6.center-align
           = image_tag @order.deceased.photo.url(:thumb), class: 'responsive-img'
           = p.input :photo, as: :photo, label: false, wrapper_html: { class: 'file-field ' }
       .row
-        .col.s12
+        .col.s9
           = p.input :cemetery_name, input_html: { class: 'validate' }
+      .row
+        .col.s3
+          = p.input :exposure_day, label: false, input_html: { class: 'validate datepicker' }, wrapper_html: { class: '' } do
+            %i.material-icons.left.prefix date_range
+            = p.label :exposure_day
+            = p.input_field :exposure_day, as: :string, class: 'datepicker'
+        .col.s3
+          = p.input :morgue_work_from, label: false, input_html: { class: 'validate timepicker' }, wrapper_html: { class: '' } do
+            %i.material-icons.left.prefix access_time
+            = p.label :morgue_work_from
+            = p.input_field :morgue_work_from, as: :string, class: 'timepicker'
+        .col.s3
+          = p.input :morgue_work_to, label: false, input_html: { class: 'validate timepicker' }, wrapper_html: { class: '' } do
+            %i.material-icons.left.prefix access_time
+            = p.label :morgue_work_to
+            = p.input_field :morgue_work_to, as: :string, class: 'timepicker'
+
+
   .divider
   = f.simple_fields_for :relative do |p|
     .section
@@ -51,19 +69,38 @@
           %i.material-icons.left looks_two
           = 'Relative info'
       .row
-        = p.input :name, input_html: { class: 'validate' }, wrapper_html: { class: 'col s6' }
-  .divider
+        .col.s6
+          .col.s12
+            = p.input :name, label: false do
+              %i.material-icons.left.prefix account_circle
+              =p.label :name
+              =p.input_field :name, class: 'validate'
+          .col.s12
+            =p.input :phone, label: false do
+              %i.material-icons.left.prefix phone
+              = p.label :phone
+              = p.input_field :phone, as: :tel, pattern: '+39 [0-9]{4}-[0-9]{4}', class: 'validate'
+          .col.s12
+            =p.input :mobile, label: false do
+              %i.material-icons.left.prefix smartphone
+              = p.label :mobile
+              = p.input_field :mobile, as: :tel, pattern: '+39 [0-9]{4}-[0-9]{4}', class: 'validate'
+        .col.s6
+          = p.input :relationship, input_html: { class: 'validate' }
 
+  .divider
   .section
     .row.blue-grey-text.text-darken-2
-      %h5.left
-        %i.material-icons local_florist
+      %h5
+        %i.material-icons.left local_florist
         ='Flowers module'
-      = link_to_add_association f, :flowers, class: 'right btn-large btn-floating tooltipped add-flower', data: { tooltip: 'Add new flower position to current order' } do
-        %i.material-icons.blue-grey.darken-1 playlist_add
-    #flowers.row
+    #flowers.row.valign-wrapper
       = f.simple_fields_for :flowers do |flower|
         =render 'flower_fields', f: flower
+      .col.s4.center-align.valign.hoverable.tooltipped{ data: { tooltip: 'Add new flower position to current order' }}
+        = link_to_add_association f, :flowers, class: 'btn-floating z-depth-0 btn-large add-flower blue-grey darken-1' do
+          %i.material-icons.white-text add
+  .divider
   .section
     .row.center-align
       =f.submit class: 'btn btn-large' do

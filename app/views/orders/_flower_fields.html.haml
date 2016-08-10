@@ -1,10 +1,12 @@
-.nested-fields.card.col.m4
+.card.nested-fields.col.s4.blue-grey.lighten-5
   .card-content
-    .card-title
-      %span= 'Flower'
-      = link_to_remove_association f, class: 'right' do
-        %i.material-icons remove_circle
-    .divider
-    = f.input :kind
-    = f.input :price
-    = f.input :text
+    .row.valign-wrapper
+      = f.input :kind, wrapper_html: { class: 'col s10' }
+      .col.s2
+        =link_to_remove_association f, class: 'btn-floating right valign right tooltipped', data: { tooltip: 'Delete these flowers' } do
+          %i.material-icons.teal.accent-4 delete_forever
+    = f.input :price, label: false do
+      %i.material-icons.left.prefix euro_symbol
+      = f.label :price
+      =f.input_field :price
+    = f.input :text, as: :text, input_html: { class: 'materialize-textarea' }

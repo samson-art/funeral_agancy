@@ -3,5 +3,5 @@ class Relative < ActiveRecord::Base
 
   scope :full, -> { }
   scope :ordered, -> { }
-  # scope :relationships, -> {  }
+  scope :relationships, -> { uniq.pluck(:relationship) }
 end
