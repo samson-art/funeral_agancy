@@ -72,4 +72,6 @@ gem 'bower-rails', '~> 0.10.0'
 gem 'wicked_pdf'
 gem 'wkhtmltopdf-binary'
 
+gem 'thin'
+
 ruby '2.2.3'
