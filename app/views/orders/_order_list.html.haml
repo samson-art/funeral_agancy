@@ -5,7 +5,7 @@
       %span.title= o.deceased.name
       %p
         %strong Funeral:
-        = "#{o.deceased.funeral_time.strftime('%H:%M')} #{o.deceased.funeral_day.strftime('%d/%m/%Y')}"
+        = "#{o.deceased.funeral_time} #{o.deceased.funeral_day}"
         %br
         %strong Cemetery:
         = "#{o.deceased.cemetery_name}"
