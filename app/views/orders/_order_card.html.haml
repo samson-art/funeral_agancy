@@ -13,11 +13,28 @@
               = image_tag o.deceased.photo.url(:thumb), class: 'responsive-img center'
             .col.m8.valign
               %p
-                = 'Funerale: '
-                %strong= "#{o.deceased.funeral_time} #{o.deceased.funeral_day}"
-                %br
+                = "Funerale: "
+                %span.card-date
+                  = " #{o.deceased.funeral_day}"
+                = " at "
+                %span.card-place
+                  = "#{o.deceased.funeral_place}"
+              %p
                 = 'Cemetery: '
-                %strong= "#{o.deceased.cemetery_name}"
-                %br
+                %span.card-cemetey
+                  = "#{o.deceased.cemetery_name}"
+              %p
                 = 'Relative: '
-                %strong= "#{o.relative.name}, phone: #{o.relative.mobile}"
+                %span.card-relative
+                  = "#{o.relative.name}"
+              %p
+                = 'Phone: '
+                %span.card-phone
+                  = "#{o.relative.mobile}"
+          .divider
+          .row
+            .col.s12
+              %blockquote
+                = "Edited at "
+                %span.card-date
+                  ="#{o.edited_at}"

@@ -11,7 +11,25 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160809052001) do
+ActiveRecord::Schema.define(version: 20160812161016) do
+
+  create_table "assistants", force: :cascade do |t|
+    t.string   "name"
+    t.integer  "order_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  add_index "assistants", ["order_id"], name: "index_assistants_on_order_id"
+
+  create_table "cars", force: :cascade do |t|
+    t.string   "model"
+    t.integer  "order_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  add_index "cars", ["order_id"], name: "index_cars_on_order_id"
 
   create_table "deceaseds", force: :cascade do |t|
     t.string   "name"
@@ -37,6 +55,11 @@ ActiveRecord::Schema.define(version: 20160809052001) do
     t.string   "note"
     t.date     "flowerday"
     t.time     "flowertime"
+    t.boolean  "pillow_take"
+    t.boolean  "instruments_1"
+    t.boolean  "instruments_2"
+    t.boolean  "instruments_3"
+    t.boolean  "instruments_4"
     t.date     "arrive_day"
     t.time     "arrive_time"
     t.string   "arrive_from"

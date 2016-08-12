@@ -39,7 +39,13 @@
               = p.input_field :funeral_time, as: :string, class: 'timepicker'
         .col.s6.center-align
           = image_tag @order.deceased.photo.url(:thumb), class: 'responsive-img'
-          = p.input :photo, as: :photo, label: false, wrapper_html: { class: 'file-field ' }
+          .file-field.input-field
+            .btn
+              %span
+                %i.material-icons add_a_photo
+              =p.input_field :photo, class: 'file', as: :file
+            .file-path-wrapper
+              %input.file-path.validate{placeholder: 'Upload photo'}
       .row
         .col.s9
           = p.input :cemetery_name, input_html: { class: 'validate' }
@@ -48,19 +54,70 @@
           = p.input :exposure_day, label: false, input_html: { class: 'validate datepicker' }, wrapper_html: { class: '' } do
             %i.material-icons.left.prefix date_range
             = p.label :exposure_day
-            = p.input_field :exposure_day, as: :string, class: 'datepicker'
+            = p.input_field :exposure_day, as: :string, class: 'datepicker validate'
         .col.s3
           = p.input :morgue_work_from, label: false, input_html: { class: 'validate timepicker' }, wrapper_html: { class: '' } do
             %i.material-icons.left.prefix access_time
             = p.label :morgue_work_from
-            = p.input_field :morgue_work_from, as: :string, class: 'timepicker'
+            = p.input_field :morgue_work_from, as: :string, class: 'timepicker validate'
         .col.s3
           = p.input :morgue_work_to, label: false, input_html: { class: 'validate timepicker' }, wrapper_html: { class: '' } do
             %i.material-icons.left.prefix access_time
             = p.label :morgue_work_to
-            = p.input_field :morgue_work_to, as: :string, class: 'timepicker'
-
-
+            = p.input_field :morgue_work_to, as: :string, class: 'timepicker validate'
+      .row
+        .col.s3
+          = p.input :departure_day, label: false do
+            %i.material-icons.left.prefix date_range
+            = p.label :departure_day
+            = p.input_field :departure_day, as: :string, class: 'datepicker validate'
+        .col.s3
+          = p.input :departure_time, label: false do
+            %i.material-icons.left.prefix date_range
+            = p.label :departure_time
+            = p.input_field :departure_time, as: :string, class: 'timepicker validate'
+      .row
+        .col.s12
+          = p.input :coffin_issued_by
+      .row
+        .col.s12
+          = p.input :coffin_prepare_by
+      .row
+        .col.s12
+          = p.input :crematorium_kind, collection: Deceased.crematorium_kinds, label_html: {class: 'active'}
+      .row.valign-wrapper
+        .col.s8
+          = p.input :coffin_kind
+        .col.s4.valign
+          =p.input :pillow_take, wrapper: :vertical_boolean
+      .row
+        .col.s12
+          =p.input :note, as: :text, input_html: {class: 'materialize-textarea'}
+  .divider
+  .section
+    .row.blue-grey-text.text-darken-2
+      %h5
+        %i.material-icons.left build
+        ='Instruments'
+    =f.simple_fields_for :deceased do |p|
+      .row
+        .col.s6
+          =p.input :instruments_1, wrapper: :vertical_boolean, label: false do
+            =p.input_field :instruments_1
+            =p.label :instruments_1
+        .col.s6
+          =p.input :instruments_2, wrapper: :vertical_boolean, label: false do
+            =p.input_field :instruments_2
+            =p.label :instruments_2
+      .row
+        .col.s6
+          =p.input :instruments_3, wrapper: :vertical_boolean, label: false do
+            =p.input_field :instruments_3
+            =p.label :instruments_3
+        .col.s6
+          =p.input :instruments_4, wrapper: :vertical_boolean, label: false do
+            =p.input_field :instruments_4
+            =p.label :instruments_4
   .divider
   = f.simple_fields_for :relative do |p|
     .section
@@ -75,31 +132,63 @@
               %i.material-icons.left.prefix account_circle
               =p.label :name
               =p.input_field :name, class: 'validate'
-          .col.s12
+          .col.s6
             =p.input :phone, label: false do
               %i.material-icons.left.prefix phone
               = p.label :phone
               = p.input_field :phone, as: :tel, pattern: '+39 [0-9]{4}-[0-9]{4}', class: 'validate'
-          .col.s12
+          .col.s6
             =p.input :mobile, label: false do
               %i.material-icons.left.prefix smartphone
               = p.label :mobile
               = p.input_field :mobile, as: :tel, pattern: '+39 [0-9]{4}-[0-9]{4}', class: 'validate'
         .col.s6
           = p.input :relationship, input_html: { class: 'validate' }
-
   .divider
   .section
     .row.blue-grey-text.text-darken-2
       %h5
         %i.material-icons.left local_florist
         ='Flowers module'
-    #flowers.row.valign-wrapper
+        = link_to_add_association f, :flowers, class: 'btn-floating z-depth-0 add-flower blue-grey darken-1 tooltipped', data: { tooltip: 'Add new flower position to current order' } do
+          %i.material-icons.white-text.right add
+      = f.simple_fields_for :deceased do |d|
+        .row
+          .col.s6
+            =d.input :flowerday, label: false do
+              %i.material-icons.left.prefix date_range
+              = d.label :flowerday
+              = d.input_field :flowerday, as: :string, class: 'datepicker validate'
+          .col.s6
+            =d.input :flowertime, label: false do
+              %i.material-icons.left.prefix access_time
+              = d.label :flowertime
+              = d.input_field :flowertime, as: :string, class: 'timepicker validate'
+    #flowers.row
       = f.simple_fields_for :flowers do |flower|
         =render 'flower_fields', f: flower
-      .col.s4.center-align.valign.hoverable.tooltipped{ data: { tooltip: 'Add new flower position to current order' }}
-        = link_to_add_association f, :flowers, class: 'btn-floating z-depth-0 btn-large add-flower blue-grey darken-1' do
-          %i.material-icons.white-text add
+  .divider
+  .section
+    .row.blue-grey-text.text-darken-2
+      %h5
+        %i.material-icons.left assistant
+        ='Assistants'
+        = link_to_add_association f, :assistants, class: 'btn-floating z-depth-0 add-assistant blue-grey darken-1 tooltipped', data: { tooltip: 'Add new assistant to this order' } do
+          %i.material-icons.white-text.right add
+    #assistants
+      = f.simple_fields_for :assistants do |a|
+        =render 'assistant_fields', f: a
+  .divider
+  .section
+    .row.blue-grey-text.text-darken-2
+      %h5
+        %i.material-icons.left directions_car
+        ='Cars'
+        = link_to_add_association f, :cars, class: 'btn-floating z-depth-0 add-car blue-grey darken-1 tooltipped', data: { tooltip: 'Add new car to this order' } do
+          %i.material-icons.white-text.right add
+    #cars
+      =f.simple_fields_for :cars do |c|
+        =render 'car_fields', f: c
   .divider
   .section
     .row.center-align

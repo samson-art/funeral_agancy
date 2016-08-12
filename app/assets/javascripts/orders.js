@@ -25,13 +25,17 @@ var ready = function(){
         data: gon.cemetery_names
     });
 
+    $('input#order_deceased_attributes_coffin_kind').autocomplete({
+        data: gon.coffin_kinds
+    });
+
     $('.collapsible').collapsible({
         // accordion : false
     });
 
     $('input.timepicker').bootstrapMaterialDatePicker({
         date: false,
-        format: 'hh:mm'
+        format: 'HH:mm'
     });
 
     $('.tooltipped').tooltip({delay: 50});
@@ -55,10 +59,49 @@ var ready = function(){
         });
 
     $('.add-flower')
-        .data("association-insertion-method", 'before')
+        .data("association-insertion-method", 'append')
         .data("association-insertion-node",  function(link){
-            return link.closest('.col')
+            return link.closest('.row').next('#flowers.row');
         });
+    $('.add-car')
+        .data("association-insertion-method", 'append')
+        .data("association-insertion-node",  function(link){
+            return link.closest('.row').next('#cars');
+        });
+    $('#cars')
+        .on('cocoon:before-insert', function(e, flower_to_be_added) {
+            flower_to_be_added.fadeIn('slow');
+        })
+        .on('cocoon:after-insert', function(e, added_task) {
+            // e.g. set the background of inserted task
+            // added_task.css("background","red");
+        })
+        .on('cocoon:before-remove', function(e, flower) {
+            // allow some time for the animation to complete
+            $(this).data('remove-timeout', 1000);
+            flower.fadeOut('slow');
+        });
+    $('#assistants')
+        .on('cocoon:before-insert', function(e, flower_to_be_added) {
+            flower_to_be_added.fadeIn('slow');
+        })
+        .on('cocoon:after-insert', function(e, added_task) {
+            // e.g. set the background of inserted task
+            // added_task.css("background","red");
+        })
+        .on('cocoon:before-remove', function(e, flower) {
+            // allow some time for the animation to complete
+            $(this).data('remove-timeout', 1000);
+            flower.fadeOut('slow');
+        });
+
+    $('.add-assistant')
+        .data("association-insertion-method", 'append')
+        .data("association-insertion-node",  function(link){
+            return link.closest('.row').next('#assistants');
+        });
+
+    $('select').material_select();
 
     Materialize.updateTextFields();
 

@@ -7,7 +7,11 @@ class DocumentsController < ApplicationController
 
   def pdf
     kind = params[:kind]
-    render pdf: "#{@order.deceased.name.upcase}_#{kind}", template: "documents/#{kind}"
+    render pdf: "#{@order.deceased.name.upcase}_#{kind}",
+           template: "documents/#{kind}",
+           header: { html: {template: 'documents/_header'} },
+           footer: { html: {template: 'documents/_footer'}, spaing: 10 },
+           margin: { :top => 10 }
   end
 
   private

@@ -1,0 +1,10 @@
+.row.nested-fields
+  .col.s10
+    =f.input :model, label: false do
+      %i.material-icons.left.prefix account_box
+      =f.label :model
+      =f.input_field :model, class: 'validate'
+  .col.s2
+    =link_to_remove_association f, class: 'btn-floating tooltipped', data: { tooltip: 'Delete this car' } do
+      %i.material-icons.teal.accent-4 delete_forever
+

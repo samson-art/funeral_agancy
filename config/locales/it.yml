@@ -1,0 +1,15 @@
+it:
+  activerecord:
+    models:
+      order:
+      deceased:
+      car:
+      assistant:
+      flower:
+      relative:
+    attributes:
+      order:
+        instruments_1: CARRELLO E DRAPPO (SU NUOVE CHIESE CHIEDERE SEMPRE AL PRETE)
+        instruments_2: TAVOLINO E CASSETTA OFFERTE DOVE RICHIESTO
+        instruments_3: FERRI PER CHIUSURA (CONTROLLA DUE VOLTE)
+        instruments_4: PERMESSO DI SEPPELLIMENTO PER IL PRETE IN COPIA E ALTRI DOC

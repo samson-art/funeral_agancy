@@ -15,7 +15,7 @@ class OrdersController < ApplicationController
   # GET /orders
   # GET /orders.json
   def index
-    @orders = Order.full.paginate(:page => params[:page], :per_page => 4)
+    @orders = Order.full.ordered.paginate(:page => params[:page], :per_page => params[:per_page] || 10)
     @view = params[:view] || 'card'
   end
 
@@ -31,6 +31,8 @@ class OrdersController < ApplicationController
     @order.build_deceased
     @order.build_relative
     @order.flowers.build
+    @order.assistants.build
+    @order.cars.build
   end
 
   # GET /orders/1/edit
@@ -41,6 +43,8 @@ class OrdersController < ApplicationController
     gon.cemetery_names = @cemetery_names
     @relationships = Hash[Relative.relationships.map{|x| [x, nil]}]
     gon.relationships = @relationships
+    @coffin_kinds = Hash[Deceased.coffin_kinds.map{|x| [x, nil]}]
+    gon.coffin_kinds = @coffin_kinds
   end
 
   # POST /orders
@@ -62,7 +66,7 @@ class OrdersController < ApplicationController
   # PATCH/PUT /orders/1.json
   def update
     respond_to do |format|
-      if @order.relative.update!(order_params[:relative_attributes]) and @order.deceased.update!(order_params[:deceased_attributes])
+      if @order.update(order_params)
         format.html { redirect_to @order, notice: 'Order was successfully updated.' }
         format.json { render :show, status: :ok, location: @order }
       else
@@ -99,7 +103,7 @@ class OrdersController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def order_params
-      params.require(:order).permit(:deceased_attributes => [:name, :birthday, :deathday, :funeral_day, :funeral_place, :crematorium_kind, :photo, :cemetery_name, :funeral_time, :coffin_kind, :flowerday, :flowertime, :coffin_prepare_by, :coffin_issued_by, :note], :relative_attributes => [:name, :phone, :mobile, :relationship], :flowers_attributes => [:kind, :text, :price])
+      params.require(:order).permit(:id, :deceased_attributes => [:name, :birthday, :deathday, :funeral_day, :funeral_place, :crematorium_kind, :photo, :cemetery_name, :funeral_time, :coffin_kind, :flowerday, :flowertime, :coffin_prepare_by, :coffin_issued_by, :note, :exposure_day, :morgue_work_from, :morgue_work_to, :departure_day, :departure_time, :pillow_take, :instruments_1, :instruments_2, :instruments_3], :relative_attributes => [:name, :phone, :mobile, :relationship], :flowers_attributes => [:id, :kind, :text, :price, :_destroy], :assistants_attributes => [:id, :name, :_destroy], :cars_attributes => [:id, :model, :_destroy])
     end
 
     def set_template

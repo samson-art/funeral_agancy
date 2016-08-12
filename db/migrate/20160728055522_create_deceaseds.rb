@@ -21,7 +21,11 @@ class CreateDeceaseds < ActiveRecord::Migration
       t.string :note
       t.date :flowerday
       t.time :flowertime
-
+      t.boolean :pillow_take
+      t.boolean :instruments_1
+      t.boolean :instruments_2
+      t.boolean :instruments_3
+      t.boolean :instruments_4
 
       t.date :arrive_day
       t.time :arrive_time
