@@ -1,7 +1,8 @@
 class CreateRelatives < ActiveRecord::Migration
   def change
     create_table :relatives do |t|
-      t.string :name
+      t.string :firstname
+      t.string :lastname
       t.string :relationship
       t.string :phone
       t.string :mobile

@@ -2,6 +2,10 @@
   %nav
     .nav-wrapper.blue-grey.darken-3
       %ul
+        -#-if params[:action] == 'show'
+        -#  %li
+        -#    =link_to , class: 'tooltipped', data: {tooltip: 'Go back'} do
+        -#      %i.material-icons.teal-text backspace
         -if ['edit', 'new'].include?(request.original_url.split('/')[-1].split('?')[0])
           %li
             =link_to :back, class: 'tooltipped', data: { tooltip: 'Go back' } do
@@ -9,7 +13,7 @@
         -if !['edit', 'new'].include?(request.original_url.split('/')[-1].split('?')[0])
           %li
             =link_to new_order_path, class: 'tooltipped', data: { tooltip: 'Create new order' } do
-              %i.material-icons.teal-text.text-accent-2 add_circle
+              %i.material-icons.cyan-text.text-accent-1 add_circle
         - if @order.present? and !['edit', 'new'].include?(request.original_url.split('/')[-1].split('?')[0])
           %li
             = link_to edit_order_path(@order), class: 'tooltipped', data: { tooltip: 'Edit this order' } do
@@ -25,10 +29,10 @@
           = link_to nil, class: 'tooltipped', data: { tooltip: 'Log out from the app.' } do
             %i.material-icons power_settings_new
       -if !['edit', 'new'].include?(request.original_url.split('/')[-1].split('?')[0])
-        %form.col.m4.right
+        =form_tag orders_path(params), method: :get, :id => 'orders_search', class: 'col m4 right', remote: true do
           .input-field
-            %input#search{:required => '', :type => 'search'}
+            =text_field_tag :query, params[:query], id: 'search', :required => '', :type => 'search'
             %label{:for => 'search'}
               %i.material-icons search
             %i.material-icons close
-      = link_to 'Requiem', nil, class: 'brand-logo center'
+      = link_to 'Phoenix', nil, class: 'brand-logo center'

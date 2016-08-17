@@ -20,6 +20,14 @@ class Deceased < ActiveRecord::Base
   scope :funeral_places, -> { uniq.pluck(:funeral_place) }
   scope :coffin_kinds, -> { uniq.pluck(:coffin_kind) }
 
+  def age
+    (self[:deathday].year-self[:birthday].year)- (self[:birthday].to_date.change(:year => self[:deathday].year) > self[:deathday] ? 1 : 0)
+  end
+
+  def name
+    "#{self[:firstname]} #{self[:lastname]}"
+  end
+
   def funeral_day
     set_date(self[:funeral_day])
   end

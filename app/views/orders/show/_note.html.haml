@@ -1,0 +1,14 @@
+#note.card.lime.lighten-4
+  .card-content
+    %i.material-icons.left note
+    %span.card-title='Note'
+    %a{class: 'btn-floating right note-lock'}
+      %i.material-icons.lock
+    .divider.teal
+    =simple_form_for order, method: :put, remote: true do |f|
+      =f.simple_fields_for :deceased do |p|
+        =p.text_area :note, class: 'materialize-textarea', label:false, readonly: true, title: 'Locked'
+  .card-action.center-align.hide
+    =button_tag class: 'btn-flat teal white-text', id: 'note-update' do
+      %i.material-icons.left save
+      ='Save note'

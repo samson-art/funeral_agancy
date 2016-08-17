@@ -1,0 +1,83 @@
+!!!
+%html
+  %head
+    %meta{:content => "text/html; charset=UTF-8"}
+    :css
+      body {
+        font-family: 'Garamond';
+        font-size: 14pt;
+        line-height: 14pt;
+        padding-top: 50px;
+        border: double 1px black;
+      }
+      .title {
+        font-weight: bold;
+        font-size: 48pt;
+        line-height: 24pt;
+        text-align: center;
+      }
+      .subtitle {
+        color: red;
+        text-decoration: underline;
+      }
+      .row {
+        margin-left: auto;
+        margin-right: auto;
+      }
+      .col-6 {
+        width: 45%;
+        margin-left: auto;
+        left: auto;
+        right: auto;
+        float: left;
+        min-height: 1pt;
+      }
+      .col-12 {
+        width: 100%;
+        margin-left: auto;
+        left: auto;
+        right: auto;
+        float: left;
+        min-height: 1pt;
+      }
+      .insert {
+        text-decoration: underline;
+      }
+      .photo {
+        border: solid 1pt black;
+      }
+      .epigraf {
+       font-family: 'Edwardian Script ITC';
+       font-size: 20pt;
+       float: right;
+      }
+  %body
+    .row
+      =wicked_pdf_image_tag @order.deceased.photo.url(:medium), class:'photo'
+      %span.epigraf="Nel nostro cuore sarà sempre vivo il tuo ricordo"
+    .row
+      .col-12{style:'text-align:center'}
+        %p='Ieri è mancato all’affetto dei suoi cari'
+        %p.title="#{@order.deceased.name}"
+        %p{style:'font-size:18pt;'}
+          ='di anni '
+          %span{style:'font-size:28pt;'}=@order.deceased.age
+    .row
+      .col-12
+        %p='Ne danno l’annuncio: la moglie, i figli Simone e Sara, la nuora, i fratelli Pierluigi e Ivo, i cognati, i nipoti ed i parenti tutti.'
+    .row
+      .col-12
+        %p='I Funerali saranno celebrati nella Chiesa Parrocchiale di Villanova di Prata. Sabato 2 Luglio alle ore 16:00, giungendo dall’Ospedale di Pordenone.'
+    .row
+      .col-12
+        %p='Seguirà la tumulazione nel cimitero di Villanova di Prata.'
+    .row
+      .col-12
+        %p='Il Santo Rosario sarà recitato questa sera alle ore 20:00 in Chiesa a Villanova.'
+    .row
+      .col-12
+        %p='LA FAMIGLIA RINGRAZIA FIN D’ORA QUANTI PARTECIPERANNO ALLA CERIMONIA.'
+    .row
+      .col-12
+        %p
+          %strong='VILLANOVA DI PRATA, Venerdì 1° Luglio 2016'

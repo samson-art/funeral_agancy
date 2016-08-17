@@ -8,19 +8,19 @@
             %i.material-icons.left looks_one
             = 'General info'
       .row
-        = p.input :name, input_html: { class: 'validate' }, wrapper_html: { class: 'col s12' }, label: false do
+        = p.input :firstname, input_html: { class: 'validate' }, wrapper_html: { class: 'col s6' }, label: false do
           %i.material-icons.left.prefix account_circle
-          = p.label :name
-          = p.input_field :name
+          = p.label :firstname
+          = p.input_field :firstname
+        = p.input :lastname, input_html: { class: 'validate' }, wrapper_html: { class: 'col s6' }, label: false do
+          %i.material-icons.left.prefix account_circle
+          = p.label :lastname
+          = p.input_field :lastname
       .row
-        = p.input :birthday, label: false, input_html: { class: 'validate datepicker' }, wrapper_html: { class: 'col s6' } do
-          %i.material-icons.left.prefix date_range
-          = p.label :birthday
-          = p.input_field :birthday, as: :string, class: 'datepicker'
-        = p.input :deathday, label: false, input_html: { class: 'validate datepicker' }, wrapper_html: { class: 'col s6' } do
-          %i.material-icons.left.prefix date_range
-          = p.label :deathday
-          = p.input_field :deathday, as: :string, class: 'datepicker'
+        .col.s6
+          = p.input :birthday, label: false, as: :date_picker
+        .col.s6
+          = p.input :deathday, label: false, as: :date_picker
       .row.valign-wrapper
         .col.s6.valign
           = p.input :funeral_place, input_html: { class: 'validate' }, label: false do
@@ -29,14 +29,10 @@
             = p.input_field :funeral_place
           %br
           .row
-            = p.input :funeral_day, label: false, input_html: { class: 'validate datepicker' }, wrapper_html: { class: 'col s6' } do
-              %i.material-icons.left.prefix date_range
-              = p.label :funeral_day
-              = p.input_field :funeral_day, as: :string, class: 'datepicker'
-            = p.input :funeral_time, label: false, input_html: { class: 'validate timepicker' }, wrapper_html: { class: 'col s6' } do
-              %i.material-icons.left.prefix access_time
-              = p.label :funeral_time
-              = p.input_field :funeral_time, as: :string, class: 'timepicker'
+            .col.s6
+              =p.input :funeral_day, as: :date_picker, label: false
+            .col.s6
+              =p.input :funeral_time, as: :time_picker, label: false
         .col.s6.center-align
           = image_tag @order.deceased.photo.url(:thumb), class: 'responsive-img'
           .file-field.input-field
@@ -51,31 +47,16 @@
           = p.input :cemetery_name, input_html: { class: 'validate' }
       .row
         .col.s3
-          = p.input :exposure_day, label: false, input_html: { class: 'validate datepicker' }, wrapper_html: { class: '' } do
-            %i.material-icons.left.prefix date_range
-            = p.label :exposure_day
-            = p.input_field :exposure_day, as: :string, class: 'datepicker validate'
+          = p.input :exposure_day, label: false, as: :date_picker
         .col.s3
-          = p.input :morgue_work_from, label: false, input_html: { class: 'validate timepicker' }, wrapper_html: { class: '' } do
-            %i.material-icons.left.prefix access_time
-            = p.label :morgue_work_from
-            = p.input_field :morgue_work_from, as: :string, class: 'timepicker validate'
+          = p.input :morgue_work_from, label: false, as: :time_picker
         .col.s3
-          = p.input :morgue_work_to, label: false, input_html: { class: 'validate timepicker' }, wrapper_html: { class: '' } do
-            %i.material-icons.left.prefix access_time
-            = p.label :morgue_work_to
-            = p.input_field :morgue_work_to, as: :string, class: 'timepicker validate'
+          = p.input :morgue_work_to, label: false, as: :time_picker
       .row
         .col.s3
-          = p.input :departure_day, label: false do
-            %i.material-icons.left.prefix date_range
-            = p.label :departure_day
-            = p.input_field :departure_day, as: :string, class: 'datepicker validate'
+          = p.input :departure_day, label: false, as: :date_picker
         .col.s3
-          = p.input :departure_time, label: false do
-            %i.material-icons.left.prefix date_range
-            = p.label :departure_time
-            = p.input_field :departure_time, as: :string, class: 'timepicker validate'
+          = p.input :departure_time, label: false, as: :time_picker
       .row
         .col.s12
           = p.input :coffin_issued_by
@@ -128,10 +109,15 @@
       .row
         .col.s6
           .col.s12
-            = p.input :name, label: false do
+            = p.input :firstname, label: false do
               %i.material-icons.left.prefix account_circle
-              =p.label :name
-              =p.input_field :name, class: 'validate'
+              =p.label :firstname
+              =p.input_field :firstname, class: 'validate'
+          .col.s12
+            = p.input :lastname, label: false do
+              %i.material-icons.left.prefix account_circle
+              =p.label :lastname
+              =p.input_field :lastname, class: 'validate'
           .col.s6
             =p.input :phone, label: false do
               %i.material-icons.left.prefix phone
@@ -155,15 +141,9 @@
       = f.simple_fields_for :deceased do |d|
         .row
           .col.s6
-            =d.input :flowerday, label: false do
-              %i.material-icons.left.prefix date_range
-              = d.label :flowerday
-              = d.input_field :flowerday, as: :string, class: 'datepicker validate'
+            =d.input :flowerday, label: false, as: :date_picker
           .col.s6
-            =d.input :flowertime, label: false do
-              %i.material-icons.left.prefix access_time
-              = d.label :flowertime
-              = d.input_field :flowertime, as: :string, class: 'timepicker validate'
+            =d.input :flowertime, label: false, as: :time_picker
     #flowers.row
       = f.simple_fields_for :flowers do |flower|
         =render 'flower_fields', f: flower

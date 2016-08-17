@@ -16,17 +16,22 @@
         .collapsible-body
           %ul
             %li
-              = link_to orders_path(view: 'card'), class: 'waves-effect waves-teal' do
-                = 'Cards'
-                %i.material-icons.right view_module
+              = link_to new_order_path, class: 'waves-effect waves-teal' do
+                = 'New'
+                %i.material-icons.right.cyan-text create
+            %li.divider
             %li
-              = link_to orders_path(view: 'table'), class: 'waves-effect waves-teal' do
-                ='Table'
-                %i.material-icons.right grid_on
+              = link_to orders_path, class: 'waves-effect waves-teal' do
+                = 'Active'
+                %span.badge
+                  = Order.active.size
+                %i.material-icons.right.teal-text.text-accent-4 inbox
             %li
-              = link_to orders_path(view: 'list'), class: 'waves-effect waves-teal' do
-                = 'List'
-                %i.material-icons.right view_list
+              = link_to orders_path(archived: true), class: 'waves-effect waves-teal' do
+                ='Archived'
+                %span.badge
+                  = Order.archived.size
+                %i.material-icons.right.blue-grey-text archive
       %li.bold
         %a{ class: "collapsible-header waves-effect waves-teal #{(@documents.present? or @document.present?) ? 'active': nil}" }
           %i.material-icons folder_open

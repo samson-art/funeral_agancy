@@ -1,7 +1,8 @@
 class CreateDeceaseds < ActiveRecord::Migration
   def change
     create_table :deceaseds do |t|
-      t.string :name
+      t.string :firstname
+      t.string :lastname
       t.date :birthday
       t.date :deathday
       t.string :born_place
@@ -22,10 +23,14 @@ class CreateDeceaseds < ActiveRecord::Migration
       t.date :flowerday
       t.time :flowertime
       t.boolean :pillow_take
-      t.boolean :instruments_1
-      t.boolean :instruments_2
-      t.boolean :instruments_3
-      t.boolean :instruments_4
+      t.boolean :instruments_1, default: false
+      t.boolean :instruments_2, default: false
+      t.boolean :instruments_3, default: false
+      t.boolean :instruments_4, default: false
+      t.boolean :information_1, default: false
+      t.boolean :information_2, default: false
+      t.boolean :cemetery_1, default: false
+      t.boolean :cemetery_2, default: false
 
       t.date :arrive_day
       t.time :arrive_time

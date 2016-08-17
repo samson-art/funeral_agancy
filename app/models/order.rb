@@ -14,13 +14,29 @@ class Order < ActiveRecord::Base
   validates :relative, presence: true
   validates :deceased, presence: true
 
-  enum :docs_kind => [:check_list, :service_list, :flowers]
+  enum :docs_kind => [:check_list, :service_list, :flowers, :cremazione, :epigrafe]
+  enum :status => [:active, :archived]
+
+  scope :full, -> { includes(:deceased, :relative, :flowers, :assistants, :cars) }
+  scope :part, -> { includes(:deceased, :relative) }
 
   scope :ordered, -> { order(:updated_at).reverse_order }
-  scope :full, -> { includes(:deceased, :relative, :flowers, :assistants) }
+  scope :ordered_name, -> { part.order('deceaseds.lastname') }
+  scope :ordered_relative, -> { part.order('relatives.lastname') }
+
+  scope :active, -> { where('status=?', 0) }
+  scope :archived, -> { where('status=?', 1) }
 
   def edited_at
-    (self[:updated_at] > self[:created_at] ? self[:updated_at] : self[:created_at]).strftime(('%H:%M %d %b, %Y'));
+    self[:updated_at].strftime(('%H:%M %d %b, %Y'));
+  end
+
+  def self.search(query)
+    if query
+      part.joins(:deceased, :relative).where('deceaseds.firstname like ? or deceaseds.lastname like ? or relatives.firstname like ? or relatives.lastname like ?', "%#{query}%", "%#{query}%", "%#{query}%", "%#{query}%")
+    else
+      part
+    end
   end
 
 end

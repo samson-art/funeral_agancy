@@ -32,7 +32,8 @@ ActiveRecord::Schema.define(version: 20160812161016) do
   add_index "cars", ["order_id"], name: "index_cars_on_order_id"
 
   create_table "deceaseds", force: :cascade do |t|
-    t.string   "name"
+    t.string   "firstname"
+    t.string   "lastname"
     t.date     "birthday"
     t.date     "deathday"
     t.string   "born_place"
@@ -56,10 +57,14 @@ ActiveRecord::Schema.define(version: 20160812161016) do
     t.date     "flowerday"
     t.time     "flowertime"
     t.boolean  "pillow_take"
-    t.boolean  "instruments_1"
-    t.boolean  "instruments_2"
-    t.boolean  "instruments_3"
-    t.boolean  "instruments_4"
+    t.boolean  "instruments_1",        default: false
+    t.boolean  "instruments_2",        default: false
+    t.boolean  "instruments_3",        default: false
+    t.boolean  "instruments_4",        default: false
+    t.boolean  "information_1",        default: false
+    t.boolean  "information_2",        default: false
+    t.boolean  "cemetery_1",           default: false
+    t.boolean  "cemetery_2",           default: false
     t.date     "arrive_day"
     t.time     "arrive_time"
     t.string   "arrive_from"
@@ -73,8 +78,8 @@ ActiveRecord::Schema.define(version: 20160812161016) do
     t.time     "morgue_work_to"
     t.date     "departure_day"
     t.time     "departure_time"
-    t.datetime "created_at",           null: false
-    t.datetime "updated_at",           null: false
+    t.datetime "created_at",                           null: false
+    t.datetime "updated_at",                           null: false
   end
 
   create_table "documents", force: :cascade do |t|
@@ -98,12 +103,14 @@ ActiveRecord::Schema.define(version: 20160812161016) do
   create_table "orders", force: :cascade do |t|
     t.integer  "deceased_id"
     t.integer  "relative_id"
-    t.datetime "created_at",  null: false
-    t.datetime "updated_at",  null: false
+    t.integer  "status",      default: 0
+    t.datetime "created_at",              null: false
+    t.datetime "updated_at",              null: false
   end
 
   create_table "relatives", force: :cascade do |t|
-    t.string   "name"
+    t.string   "firstname"
+    t.string   "lastname"
     t.string   "relationship"
     t.string   "phone"
     t.string   "mobile"

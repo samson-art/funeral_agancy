@@ -14,3 +14,5 @@
         = "#{o.relative.name}, #{o.relative.phone}"
       =link_to order_path(o), class: 'secondary-content btn-large btn-floating transparent z-depth-0' do
         %i.material-icons.blue-grey-text forward
+#pagination.center
+  =will_paginate orders

@@ -1,22 +1,50 @@
 require 'gon'
 
 class OrdersController < ApplicationController
-  TEMPLATES = [
-      {
-          kind: :service_list, file:'service_list.docx'
-      }, {
-          kind: :flowers, file: 'flowers.docx'
-      }, {
-          kind: :check_list, file: 'check_list.docx'
-      }]
 
-  before_action :set_order, only: [:show, :edit, :update, :destroy, :download, :docs_generate]
+  before_action :set_order, only: [:show, :edit, :update, :destroy]
 
   # GET /orders
   # GET /orders.json
   def index
-    @orders = Order.full.ordered.paginate(:page => params[:page], :per_page => params[:per_page] || 10)
-    @view = params[:view] || 'card'
+    @order_by = params[:order]
+    @query = params[:query]
+    @orders =  Order.search(@query)
+    if params[:archived]
+      @orders = @orders.archived
+    else
+      @orders = @orders.active
+    end
+    if @order_by.present?
+      if @order_by == 'relative'
+        @orders = @orders.ordered_relative
+      elsif @order_by == 'name'
+        @orders = @orders.ordered_name
+      elsif @order_by == 'updated'
+        @orders = @orders.ordered
+      end
+    end
+    @reverse = params[:reverse]
+    if @reverse.present?
+      @orders = @orders.reverse_order
+    end
+    @page = params[:page] || 1
+    @orders = @orders.paginate(:page => @page || 1, :per_page => 8)
+    view = params[:view]
+    if view.present?
+      @view = view
+    else
+      @view = 'card'
+    end
+
+
+
+    respond_to do |format|
+      format.html
+      format.json
+      format.js
+    end
+
   end
 
   # GET /orders/1
@@ -33,6 +61,14 @@ class OrdersController < ApplicationController
     @order.flowers.build
     @order.assistants.build
     @order.cars.build
+    @funeral_places = Hash[Deceased.funeral_places.map{|x| [x, nil]}]
+    gon.funeral_places = @funeral_places
+    @cemetery_names = Hash[Deceased.cemetery_names.map{|x| [x, nil]}]
+    gon.cemetery_names = @cemetery_names
+    @relationships = Hash[Relative.relationships.map{|x| [x, nil]}]
+    gon.relationships = @relationships
+    @coffin_kinds = Hash[Deceased.coffin_kinds.map{|x| [x, nil]}]
+    gon.coffin_kinds = @coffin_kinds
   end
 
   # GET /orders/1/edit
@@ -69,9 +105,11 @@ class OrdersController < ApplicationController
       if @order.update(order_params)
         format.html { redirect_to @order, notice: 'Order was successfully updated.' }
         format.json { render :show, status: :ok, location: @order }
+        format.js { render 'orders/show/note', locals: { msg: 'Success update!', key: 'success' } }
       else
         format.html { render :edit }
         format.json { render json: @order.errors, status: :unprocessable_entity }
+        format.js { render 'orders/show/note', locals: { msg: 'Something goes wrong!', key: 'error' } }
       end
     end
   end
@@ -86,13 +124,25 @@ class OrdersController < ApplicationController
     end
   end
 
-  def download
-    send_file("#{Rails.root}/public#{File.dirname(@order.documents.full.first.attach.url)}/#{File.basename(@order.documents.full.first.attach.url, '?*')}", :x_sendfile => true, :disposition => 'attachment', :filename => "order_#{@order.id}_service_list.docx", :type => :docx)
+  def archivate
+    @order = Order.part.find(params[:order_id])
+    @order.status = :archived
+    if @order.save!
+      redirect_to @order, notice: 'Order was successfully archived.'
+    else
+      render :json => false
+    end
+
   end
 
-  def docs_generate
-    _docs_gen
-    redirect_to @order, flash: {success: 'Documents generated'}
+  def activate
+    @order = Order.part.find(params[:order_id])
+    @order.status = :active
+    if @order.save!
+      redirect_to @order, notice: 'Order was successfully activated.'
+    else
+      render :json => false
+    end
   end
 
   private
@@ -103,33 +153,7 @@ class OrdersController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def order_params
-      params.require(:order).permit(:id, :deceased_attributes => [:name, :birthday, :deathday, :funeral_day, :funeral_place, :crematorium_kind, :photo, :cemetery_name, :funeral_time, :coffin_kind, :flowerday, :flowertime, :coffin_prepare_by, :coffin_issued_by, :note, :exposure_day, :morgue_work_from, :morgue_work_to, :departure_day, :departure_time, :pillow_take, :instruments_1, :instruments_2, :instruments_3], :relative_attributes => [:name, :phone, :mobile, :relationship], :flowers_attributes => [:id, :kind, :text, :price, :_destroy], :assistants_attributes => [:id, :name, :_destroy], :cars_attributes => [:id, :model, :_destroy])
-    end
-
-    def set_template
-      {
-        'name' => @order.deceased.name,
-        'birthday' => @order.deceased.birthday,
-        'deathday' => @order.deceased.deathday,
-        'funeralplace' => @order.deceased.funeral_place,
-        'funeralday' => @order.deceased.funeral_day,
-        'funeraltime' => @order.deceased.funeral_time,
-        'cemeteryname' => @order.deceased.cemetery_name,
-        'vistday' => '',
-        'morgue' => '',
-        'relativename' => @order.relative.name,
-        'relativephone' => @order.relative.phone,
-        'relativemobile' => @order.relative.mobile,
-        'relationship' => @order.relative.relationship,
-        'note' => @order.deceased.note,
-        'coffinissuedby' => @order.deceased.coffin_issued_by,
-        'crematoriumkind' => @order.deceased.crematorium_kind,
-        'coffinprepareby' => @order.deceased.coffin_prepare_by,
-        'coffinkind' => @order.deceased.coffin_kind,
-        'flowerday' => @order.deceased.flowerday,
-        'flowertime' => @order.deceased.flowertime
-      }
-
+      params.require(:order).permit(:id, :status, :deceased_attributes => [:firstname, :lastname, :birthday, :deathday, :funeral_day, :funeral_place, :crematorium_kind, :photo, :cemetery_name, :funeral_time, :coffin_kind, :flowerday, :flowertime, :coffin_prepare_by, :coffin_issued_by, :note, :exposure_day, :morgue_work_from, :morgue_work_to, :departure_day, :departure_time, :pillow_take, :instruments_1, :instruments_2, :instruments_3], :relative_attributes => [:firstname, :lastname, :phone, :mobile, :relationship], :flowers_attributes => [:id, :kind, :text, :price, :_destroy], :assistants_attributes => [:id, :name, :_destroy], :cars_attributes => [:id, :model, :_destroy])
     end
 
     def _docs_gen

@@ -5,6 +5,10 @@
         .card-content
           .card-title
             = o.deceased.name
+            -if o.status == 'active'
+              %i.material-icons.teal-text.text-accent-4.tooltipped{data: {tooltip: 'Active'}} done
+            -if o.status == 'archived'
+              %i.material-icons.blue-grey-text.tooltipped{data: {tooltip: 'Archived'}} archive
             = link_to order_path(o), class: 'right btn-floating waves-effect waves-teal' do
               %i.material-icons open_in_new
           .divider
@@ -38,3 +42,5 @@
                 = "Edited at "
                 %span.card-date
                   ="#{o.edited_at}"
+#pagination.center
+  =will_paginate orders

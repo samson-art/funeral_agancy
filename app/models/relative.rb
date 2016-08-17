@@ -4,4 +4,8 @@ class Relative < ActiveRecord::Base
   scope :full, -> { }
   scope :ordered, -> { }
   scope :relationships, -> { uniq.pluck(:relationship) }
+
+  def name
+    "#{self[:firstname]} #{self[:lastname]}"
+  end
 end

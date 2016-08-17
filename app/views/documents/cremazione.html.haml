@@ -1,0 +1,152 @@
+!!!
+%html
+  %head
+    %meta{:content => "text/html; charset=UTF-8"}
+    :css
+      body {
+        font-family: 'Arial';
+        font-size: 11pt;
+        line-height: 11pt;
+      }
+      .title {
+        text-decoration: underline;
+        font-weight: bold;
+        font-size: 12pt;
+        line-height: 12pt;
+        text-align: center;
+      }
+      .subtitle {
+        color: red;
+        text-decoration: underline;
+      }
+      .row {
+        margin-left: auto;
+        margin-right: auto;
+      }
+      .col-6 {
+        width: 45%;
+        margin-left: auto;
+        left: auto;
+        right: auto;
+        float: left;
+        min-height: 1pt;
+      }
+      .col-12 {
+        width: 100%;
+        margin-left: auto;
+        left: auto;
+        right: auto;
+        float: left;
+        min-height: 1pt;
+      }
+      .insert {
+        text-decoration: underline;
+      }
+  %body
+    .row
+      .col-6
+        %p
+          ='RICHIEDE:_______________'
+        %p
+          ='_________________________'
+        %p
+          ='FAX/EMAIL:______________'
+      .col-6{style: 'font-size:9pt;line-height: 9pt;'}
+        %p='A: CONTARINA SPA'
+        %p='GESTIONE CREMATORI'
+        %p='TEL. 0422/212791-2 FAX 0422/212796'
+        %p
+          ="DATA: "
+          %span.insert
+            = "#{Date.today}"
+    .row
+      .col-12
+        %p.title
+          %strong='MODULO DI PRENATAZIONE PER LA CREMAZIONE'
+    .row
+      .col-12
+        %p{style:'font-size:9pt;line-height: 9pt;'}='Come da accord telefonici si  richiede la cremazione di:'
+    .row
+      .col-12
+        %p
+          ="NOMINATIVO DEL DEFUNTO/A: "
+          %span.insert="#{@order.deceased.name}"
+    .row
+      .col-12
+        %p
+          ="NATO/A A: "
+          %span.insert="#{@order.deceased.born_place}"
+          ='IL'
+          %span.insert="#{@order.deceased.birthday}"
+    .row
+      .col-12
+        %p
+          ="RESIDENTE A: "
+          %span.insert="#{@order.deceased.registered_in}"
+          ='VIA: '
+          %span.insert="#{@order.deceased.registered_in_street}"
+    .row
+      .col-12
+        %p
+          ="DECEDUTO/A IL: "
+          %span.insert="#{@order.deceased.deathday}"
+          ='PRESSO'
+          %span.insert="#{@order.deceased.death_place}"
+    .row
+      .col-12
+        %p
+          ="[_#{@order.deceased.corpse_kind=='cadaver' ? 'X' : '_'}_] CADAVARE [_#{@order.deceased.corpse_kind=='remains' ? 'X' : '_'}_] RESTI INCONSUNTI [_#{@order.deceased.corpse_kind=='bones' ? 'X' : '_'}_] OSSA [_#{@order.deceased.corpse_kind=='fetus' ? 'X' : '_'}_] FETTO"
+    .row
+      .col-12
+        %p
+          ='PERVERRA` '
+          %strong
+            =" IL GIORNO "
+            %span.insert="#{@order.deceased.arrive_day}"
+            =' ALLE ORE '
+            %span.insert="#{@order.deceased.arrive_time}"
+            =' DA '
+            %span.insert="#{@order.deceased.arrive_from}"
+    .row
+      .col-12
+        %strong
+          ="L`urna utilizatta sara fornita [_#{@order.deceased.vase_issued_by=='crematorium'? 'X' : '_' }_] dal crematorio [_#{@order.deceased.vase_issued_by=='company' ? 'X' : '_'}_] dall`Impresa IOF"
+    .row
+      .col-12
+        %p='LA FATTURA EMESSA SARA` INTESTATA A:'
+    .row
+      .col-12
+        %p
+          ='NOME E COGNOME/DITTA: __________________'
+    .row
+      .col-12
+        %p='RESIDENTE A/CON SEDE A _______________________'
+    .row
+      .col-12
+        %p='IN VIA _____________________________N_________'
+    .row
+      .col-12
+        %p='CODICE FISCLE/P.IVA'
+        %p{style: 'font-size:9pt;line-height: 9pt;text-align:center;'}='Firma dell`interstatario'
+        %p{style:'text-align:center;'}='_______________________'
+    .row
+      .col-12
+        %strong='PS: dopo  l`emissione della fattura l`intestatario non potra piu essere modificato'
+    .row
+      .col-12
+        %strong='DICHIARAZIONE ELETTROSTIMOLATORI'
+    .row
+      .col-12
+        %p{style: 'font-size:9pt;line-height: 9pt;text-align:center;'}='(da non compilare se cremazione di soli resti assei)'
+    .row
+      .col-12
+        %p='Il sottoseritto/a __________________nato/a____________________________'
+        %p='Il  _________residente a ____________________indirizzo__________________'
+        %p='dichiara sotto la propria responsabilita che il defunto e privo  di stimolatore cardiaco, di qualsiasi tipologia. E` consapevole che,  in caso di dichiarazione mendace, gli saranno addebitati I damni arrecati all`impianto di cremazione provocati dall`eventuale scoppio e potra essere perseguito a termini di legge.'
+    .row
+      .col-6
+      .col-6{style:'text-align:center;'}
+        %p='Firma del dichiarante'
+        %p='_______________________'
+        %p
+          %strong='(allegare copia documento d`identita di chi firma)'

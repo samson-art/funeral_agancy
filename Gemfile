@@ -55,17 +55,15 @@ gem 'rails-i18n'
 gem 'haml-rails'
 gem 'paperclip'
 gem 'simple_form'
+gem 'enum_help'
+gem 'gon'
+gem 'cocoon'
 
 gem 'materialize-sass'
 gem 'material_icons'
 gem 'normalize-rails'
 gem 'will_paginate-materialize'
 gem 'font-awesome-rails'
-
-gem 'enum_help'
-gem 'gon'
-gem 'cocoon'
-gem 'bower'
 gem 'bower-rails', '~> 0.10.0'
 
 # pdf

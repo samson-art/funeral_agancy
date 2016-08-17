@@ -1,0 +1,20 @@
+!!!
+%html
+  %head
+    %meta{charset: 'utf-8'}
+    %meta{:content => 'width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no', :name => 'viewport'}
+
+    %meta{ name: 'turbolinks-root', content: '/orders'}
+  %body.blue-grey.lighten-5
+    %ul.collection
+      -@results[:orders].each do |r|
+        %li.collection-item.avatar
+          %img.circle{:alt => "#{r.deceased.name}", :src => "#{r.deceased.photo[:thumb]}"}
+          %span.title= "#{r.deceased.name}"
+          %p
+            = "Funerale at #{r.deceased.funeral_time} of #{r.deceased.funeral_day} in #{r.deceased.funeral_place}"
+            %br/
+            = "Edited at #{r.edited_at}"
+          =link_to nil, class: 'secondary-content' do
+            %i.material-icons grade
+

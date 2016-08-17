@@ -1,10 +1,16 @@
 Rails.application.routes.draw do
   resources :orders do
-    member do
-      post 'docs_generate'
-      get 'pdf' => 'documents#pdf', as: 'pdf'
+    post 'activate' => 'orders#activate', as: :activate
+    post 'archive' => 'orders#archivate', as: :archivate
 
+    member do
+      get 'check_list' => 'documents#check_list', as: :check_list
+      get 'service_list' => 'documents#service_list', as: :service_list
+      get 'flowers' => 'documents#flowers', as: :flowers
+      get 'cremazione' => 'documents#cremazione', as: :cremazione
+      get 'epigrafe' => 'documents#epigrafe', as: :epigrafe
     end
+
   end
   resources :documents, only: [:index]
   resources :relatives, as: :contacts, only: [:index]

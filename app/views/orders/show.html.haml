@@ -1,56 +1,59 @@
-#order
-  .row
-    .card.col.m7
-      .card-content
-        .card-title
-          = @order.deceased.name
-          =link_to orders_path, class: 'right btn-floating transparent z-depth-0' do
-            %i.material-icons.right.blue-grey-text close
-        .divider
-        .section.row.valign-wrapper
-          .col.m8.valign
-            %p
-              = 'Funerale: '
-              %strong= "#{@order.deceased.funeral_time} #{@order.deceased.funeral_day}"
-              %br
-              = 'Cemetery: '
-              %strong= "#{@order.deceased.cemetery_name}"
-              %br
-              = 'Relative: '
-              %strong= "#{@order.relative.name}, phone: #{@order.relative.mobile}"
-          .col.m4.valign
-            = image_tag @order.deceased.photo.url(:medium), class: 'responsive-img materialboxed'
-        .divider
-        %ul.collapsible.popout.col.s12.info{ :data=> { :collapsible => 'expandable'} }
-          %li.active
-            .collapsible-header.blue-grey.lighten-2.active
-              %i.material-icons looks_one
-              %strong Check list
-            .collapsible-body
-              %p Lorem ipsum dolor sit amet.
-          %li.active
-            .collapsible-header.blue-grey.lighten-2.active
-              %i.material-icons looks_two
-              %strong Service list
-            .collapsible-body
-              %p Lorem ipsum dolor sit amet.
-          %li.active
-            .collapsible-header.blue-grey.lighten-2.active
-              %i.material-icons looks_3
-              %strong Flowers
-            .collapsible-body
-              %p Lorem ipsum dolor sit amet.
-
-    .documents.section.right.col.m5
-      %ul.popout.collapsible{ :data=> { :collapsible => 'expandable'} }
+#order.row
+  #info.card.col.m7
+    .card-content
+      .card-title
+        = @order.deceased.name
+        -if @order.status == 'active'
+          =link_to order_archivate_path(@order), method: :post, remote: true, class: 'right tooltipped', data: {tooltip: 'Archivate', confirm: 'Archive this order?'} do
+            %i.material-icons.blue-grey-text archive
+        -if @order.status == 'archived'
+          =link_to order_activate_path(@order), method: :post, remote: true, class: 'right tooltipped', data: {tooltip: 'Unarchive', confirm: 'Activate this order?'} do
+            %i.material-icons.teal-text.text-accent-4 unarchive
+      .divider
+      .section.row.valign-wrapper
+        .col.m8.valign
+          %p
+            = 'Funerale: '
+            %strong= "#{@order.deceased.funeral_time} #{@order.deceased.funeral_day}"
+            %br
+            = 'Cemetery: '
+            %strong= "#{@order.deceased.cemetery_name}"
+            %br
+            = 'Relative: '
+            %strong= "#{@order.relative.name}, phone: #{@order.relative.mobile}"
+        .col.m4.valign
+          = image_tag @order.deceased.photo.url(:medium), class: 'responsive-img materialboxed'
+      .divider
+      %ul.collapsible.popout.col.s12.info{ :data=> { :collapsible => 'expandable'} }
         %li.active
           .collapsible-header.blue-grey.active
-            %i.material-icons.left folder_shared
-            %strong= 'Documents'
+            %i.material-icons looks_one
+            %strong Check list
           .collapsible-body
-            .collection
-              - Order.docs_kinds.keys.each_with_index do |d, i|
-                =link_to pdf_order_path(@order, :kind => "#{d}"), class: 'collection-item', target: '_blank' do
-                  %span.title
-                    = "#{d.upcase}"
-                  %i.material-icons.right file_download
+            %p Lorem ipsum dolor sit amet.
+        %li.active
+          .collapsible-header.blue-grey.active
+            %i.material-icons looks_two
+            %strong Service list
+          .collapsible-body
+            %p Lorem ipsum dolor sit amet.
+        %li.active
+          .collapsible-header.blue-grey.active
+            %i.material-icons looks_3
+            %strong Flowers
+          .collapsible-body
+            %p Lorem ipsum dolor sit amet.
+  .documents.col.m5
+    %ul.popout.collapsible{ :data=> { :collapsible => 'expandable'} }
+      %li.active
+        .collapsible-header.blue-grey.active
+          %i.material-icons.left folder_shared
+          %strong= 'Documents'
+        .collapsible-body
+          .collection
+            - Order.docs_kinds.keys.each_with_index do |d, i|
+              =link_to "#{order_path(@order)}/#{d}", class: 'collection-item', target: '_blank' do
+                %span.title
+                  = "#{d.upcase}"
+                %i.material-icons.right file_download
+    =render 'orders/show/note', order: @order

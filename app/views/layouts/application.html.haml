@@ -3,7 +3,7 @@
   %head
     %meta{charset: 'utf-8'}
     %meta{:content => 'width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no', :name => 'viewport'}
-    %title=t('app.name')
+    %title='Phoenix'
     = Gon::Base.render_data({})
     = include_gon(:init => true)
     = stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true
@@ -16,7 +16,6 @@
     =render 'application/sidebar'
     %main.section
       =render 'flash_messages'
-      .row
-        .col.s12
-          = yield
+      .section
+        = yield
     =render 'footer'

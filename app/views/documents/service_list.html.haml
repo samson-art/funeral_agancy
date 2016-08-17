@@ -4,7 +4,7 @@
     %meta{:content => "text/html; charset=UTF-8"}/
     :css
       body {
-        font-family: 'Arial Unicode MS';
+        font-family: 'Arial';
         font-size: 8pt;
         line-height: 8pt;
         padding-top: 60px;
@@ -33,36 +33,51 @@
         float: left;
         min-height: 1pt;
       }
+      .insert {
+        text-decoration: underline;
+      }
   %body{:lang => 'it'}
     .row
       .col-12
         %p.subtitle SERVICE LIST LA SERVICE LIST E' UN CHECK OBBLIGATORIO A CURA DI CHI PRELEVA LA CARTELLINA 'FINE SERVIZIO
     .row
       .col-12
-        %p= "NOME DEFUNTO: #{@order.deceased.name}"
+        %p
+          = "NOME DEFUNTO:"
+          %span.insert=" #{@order.deceased.name}"
     .row
       .col-12
         %p= "#{(@order.deceased.crematorium_kind == 'camera') ? '[_X_]' : '[___]'} LOCULO #{((@order.deceased.crematorium_kind == 'ground') or (@order.deceased.crematorium_kind == 'cremation')) ? '[_X_]' : '[___]'} TERRA/CREMAZIONE"
     .row
       .col-12
-        %p= "FUNERALE IL: #{@order.deceased.funeral_day}"
+        %p
+          = "FUNERALE IL: "
+          %span.insert=" #{@order.deceased.funeral_day}"
     .row
       .col-12
-        %p= "ALLE ORE: #{@order.deceased.funeral_time}"
+        %p
+          = "ALLE ORE: "
+          %span.insert="#{@order.deceased.funeral_time}"
 
     .row
       .col-12
-        %p= "ESPOSTO ALLE CELLE DI: #{@order.deceased.cemetery_name}"
+        %p
+          = "ESPOSTO ALLE CELLE DI: "
+          %span.insert="#{@order.deceased.cemetery_name}"
     .row
       .col-12
-        %p= "SEPOLTURA A: #{@order.deceased.funeral_place}"
+        %p
+          = "SEPOLTURA A: "
+          %span.insert="#{@order.deceased.funeral_place}"
 
     .row
       .col-12
         %p= "TIPO DI SEPOLTURA:[#{(@order.deceased.crematorium_kind == 'camera') ? '_X_' : '___'}] LOCULO [#{(@order.deceased.crematorium_kind == 'ground') ? '_X_' : '___'}] TERRA [#{(@order.deceased.crematorium_kind == 'cremation') ? '_X_' : '___'}] CREMAZIONE"
     .row
       .col-12
-        %p= "TELEFONO DEL FAMILIARE: #{@order.relative.phone}"
+        %p
+          = "TELEFONO DEL FAMILIARE: "
+          %span.insert="#{@order.relative.phone}"
 
     .row
       .col-12
@@ -72,13 +87,13 @@
         %p
           = 'SQUADRA '
           - @order.assistants.each do |a|
-            %span= "_#{a.name}_ "
+            %span.insert= "_#{a.name}_ "
     .row
       .col-12
         %p
           = 'MEZZI '
           - @order.cars.each do |c|
-            %span= "_#{c.model}_ "
+            %span.insert= "_#{c.model}_ "
     .row
       .col-12
         %p= "CUSCINO #{@order.deceased.pillow_take ? '_X_' : '___' } DARITIRARE #{@order.deceased.pillow_take ? '___' : '_X_' } GIA'IN CELLA"
@@ -87,25 +102,42 @@
         %p.subtitle STRUMENTAZIONE E DOCUMENTI DA CARICARE NEI MEZZI
     .row
       .col-12
-        %p= "#{@order.deceased.instruments_1 ? '__X__' : '_____'} CARRELLO E DRAPPO (SU NUOVE CHIESE CHIEDERE SEMPRE AL PRETE)"
-        %p= "#{@order.deceased.instruments_2 ? '__X__' : '_____'} TAVOLINO E CASSETTA OFFERTE DOVE RICHIESTO"
-        %p= "#{@order.deceased.instruments_3 ? '__X__' : '_____'} FERRI PER CHIUSURA (CONTROLLA DUE VOLTE)"
-        %p= "#{@order.deceased.instruments_4 ? '__X__' : '_____'} PERMESSO DI SEPPELLIMENTO PER IL PRETE IN COPIA E ALTRI DOC"
+        %p
+          %span.insert= "#{@order.deceased.instruments_1 ? '__X__' : '_____'}"
+          =" CARRELLO E DRAPPO (SU NUOVE CHIESE CHIEDERE SEMPRE AL PRETE)"
+        %p
+          %span.insert= "#{@order.deceased.instruments_2 ? '__X__' : '_____'}"
+          =" TAVOLINO E CASSETTA OFFERTE DOVE RICHIESTO"
+        %p
+          %span.insert= "#{@order.deceased.instruments_3 ? '__X__' : '_____'}"
+          =" FERRI PER CHIUSURA (CONTROLLA DUE VOLTE)"
+        %p
+          %span.insert= "#{@order.deceased.instruments_4 ? '__X__' : '_____'}"
+          =" PERMESSO DI SEPPELLIMENTO PER IL PRETE IN COPIA E ALTRI DOC"
     .row
       .col-12
         %p.subtitle INFORMAZIONI DA CHIEDERE ALLA FAMIGLIA
     .row
       .col-12
-        %p _____ TRAGITTO DA PERCORRERE (DESCRIVI__________________________________________________)
-        %p _____ DESTINAZIONE DEI FIORI (DESCRIVI__________________________________________________)
+        %p
+          %span.insert="__#{@order.deceased.information_1 ? 'X' : '_'}__"
+          = 'TRAGITTO DA PERCORRERE (DESCRIVI__________________________________________________)'
+        %p
+          %span.insert="__#{@order.deceased.information_2 ? 'X' : '_'}__"
+          = 'DESTINAZIONE DEI FIORI (DESCRIVI__________________________________________________)'
     .row
       .col-12
         %p.subtitle OPERAZIONI CIMITERIALI
     .row
       .col-12
-        %p _____ RITIRO LASTRA MARMO _____ FARE FOTO LASTRA ESISTENTE
-        %p NOTE, IMPRESSIONI E PUNTI DI CRITICITAÕ, PARTICOLARI DA RICORDARSI:
+        %p
+          %span.insert="__#{@order.deceased.cemetery_1 ? 'X' : '_'}__"
+          =' RITIRO LASTRA MARMO '
+          %span.insert="__#{@order.deceased.cemetery_1 ? 'X' : '_'}__"
+          = 'FARE FOTO LASTRA ESISTENTE'
+        %p NOTE, IMPRESSIONI E PUNTI DI CRITICITAO, PARTICOLARI DA RICORDARSI:
+        %p.insert="#{@order.deceased.note}"
     .row
       .col-12
-        %p FIRMA DELL'OPERATORE _____________________________________ DATA
+        %p FIRMA DELL`OPERATORE _____________________________________ DATA
 

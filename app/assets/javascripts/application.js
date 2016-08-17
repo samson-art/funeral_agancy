@@ -10,12 +10,13 @@
 // Read Sprockets README (https://github.com/rails/sprockets#sprockets-directives) for details
 // about supported directives.
 //
+// Bower packages
 //= require jquery
 //= require momentjs
 //= require bootstrap-material-datetimepicker
-//= require materialize-sprockets
+//= require turbolinks
 //= require jquery.turbolinks
 //= require jquery_ujs
+//= require materialize-sprockets
 //= require cocoon
-//= require turbolinks
 //= require_tree .

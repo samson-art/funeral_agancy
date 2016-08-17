@@ -25,3 +25,5 @@
             %li=link_to 'Edit', edit_order_path(o)
             %li.divider
             %li=link_to 'Delete', order_path(o), method: :delete, confirm: 'Are you sure?', class: 'red-text'
+#pagination.center
+  =will_paginate orders

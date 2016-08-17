@@ -1,11 +1,17 @@
-.page-header.row
-  .col.s5
-    %h3 Listing orders
+.page-header.row.valign-wrapper
+  .col.s4
+    %h3= "#{params[:archived] ? 'Archived' : 'Active' } orders"
+  .col.s8.valign
+    .col.s12
+      =form_tag orders_path, method: :get, id: 'orders_sort', remote: true, class: 'right' do
+        %span='View as '
+        =select_tag :view, options_for_select([ ['card', { class: 'left', 'data-icon': image_url('icons/card.svg') }], ['table', { class: 'left', 'data-icon': image_url('icons/grid.svg') }], ['list', {  class: 'left', 'data-icon': image_path('icons/list.svg')}]], params[:view]), class: 'icons view'
+        %span='Sorted by '
+        =select_tag :order, options_for_select(['name', 'relative', 'updated'], params[:order]), class: 'order'
+        =hidden_field_tag :reverse, params[:reverse]
+        =button_tag id: 'order_direction', class: 'btn-floating waves-effect waves-teal', remote: true, type: :button do
+          %i.material-icons
+
 
 #order-panel
   =render "order_#{@view}", orders: @orders
-  .center
-    =will_paginate @orders
-
-
--#=render 'fabbuttons'
