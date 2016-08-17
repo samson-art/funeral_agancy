@@ -130,9 +130,10 @@ var ready = function() {
     });
 
     $('#order-panel').on('click', '', function(event) {
+        event.preventDefault();
         $.getScript(this.href);
         console.log(this.href);
-        event.preventDefault();
+        return false;
     });
 
     var icons = $('.timepicker');
