@@ -12,11 +12,11 @@
 //
 // Bower packages
 //= require jquery
-//= require momentjs
-//= require bootstrap-material-datetimepicker
 //= require turbolinks
 //= require jquery.turbolinks
 //= require jquery_ujs
 //= require materialize-sprockets
+//= require momentjs
+//= require bootstrap-material-datetimepicker
 //= require cocoon
 //= require_tree .

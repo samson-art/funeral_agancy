@@ -109,6 +109,8 @@ GEM
     mimemagic (0.3.2)
     mini_portile2 (2.1.0)
     minitest (5.9.0)
+    momentjs-rails (2.11.1)
+      railties (>= 3.1)
     multi_json (1.12.1)
     nokogiri (1.6.8)
       mini_portile2 (~> 2.1.0)
@@ -228,6 +230,7 @@ DEPENDENCIES
   jquery-turbolinks
   material_icons
   materialize-sass
+  momentjs-rails
   normalize-rails
   paperclip
   pg

@@ -58,7 +58,7 @@ gem 'simple_form'
 gem 'enum_help'
 gem 'gon'
 gem 'cocoon'
-
+gem 'momentjs-rails'
 gem 'materialize-sass'
 gem 'material_icons'
 gem 'normalize-rails'
