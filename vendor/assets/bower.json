@@ -1,0 +1,11 @@
+{
+  "name": "dsl-generated dependencies",
+  "dependencies": {
+    "jquery": "latest",
+    "momentjs": "latest",
+    "bootstrap-material-datetimepicker": "latest"
+  },
+  "resolutions": {
+    "jquery": "3.1.0"
+  }
+}
